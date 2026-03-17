@@ -8,8 +8,6 @@ Este desafio é a porta de entrada para fazer parte desse time. Ele foi desenhad
 
 Não esperamos perfeição — esperamos raciocínio claro, código limpo e decisões justificadas. Mostre como você pensa e como você constrói.
 
-Boa sorte. Que o multiplicador esteja ao seu favor. 🎲
-
 ---
 
 ## Visão Geral 📖
@@ -21,7 +19,6 @@ Você deve construir o **backend** (engine do jogo, carteira, comunicação em t
 **Autenticação não faz parte do escopo.** Use um Identity Provider externo (Keycloak, Auth0 ou Okta).
 
 ---
-
 
 ## Regras do Jogo 🎲
 
