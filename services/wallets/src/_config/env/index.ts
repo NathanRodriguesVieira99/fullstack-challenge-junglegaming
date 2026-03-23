@@ -1,7 +1,5 @@
-import { loadEnvFile } from "node:process";
+import "dotenv/config";
 import z from "zod";
-
-loadEnvFile(".env");
 
 export const envSchema = z.object({
   PORT: z.coerce.number(),
