@@ -2,16 +2,16 @@ import { Controller, Get, Post } from "@nestjs/common";
 
 @Controller("games")
 export class GamesController {
-  @Get("rounds")
+  @Get("rounds/current")
   async currentRound() {}
 
-  @Get("rounds/:roundId/verify")
+  @Get("rounds/history")
   async roundHistory() {}
 
-  @Get("rounds")
+  @Get("rounds/:roundId/verify")
   async verify() {}
 
-  @Get("bets")
+  @Get("bets/me")
   async bets() {}
 
   @Post("bet")
