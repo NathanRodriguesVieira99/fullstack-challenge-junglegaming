@@ -10,7 +10,9 @@
     "preview": "vite preview",
     "test": "vitest run --bail 1",
     "test:watch": "vitest watch --bail 1",
-    "test:cov": "vitest run --coverage"
+    "test:cov": "vitest run --coverage",
+    "test:e2e:ui": " playwright test --ui --reporter null",
+    "test:e2e:headed": " playwright test --headed  --reporter null"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.8",
@@ -31,6 +33,7 @@
   "devDependencies": {
     "@babel/core": "^7.29.0",
     "@eslint/js": "^9.39.4",
+    "@playwright/test": "^1.58.2",
     "@rolldown/plugin-babel": "^0.2.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
