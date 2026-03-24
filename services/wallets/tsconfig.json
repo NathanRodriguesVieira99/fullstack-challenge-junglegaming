@@ -19,7 +19,10 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@tests/*": ["./tests/*"]
+      "@tests/*": ["./tests/*"],
+      "@controllers/*": ["./src/presentation/controllers/*"],
+      "@services/*": ["./src/application/services/*"],
+      "@dtos/*": ["./src/presentation/dtos/*"]
     },
     "types": ["vitest/globals"]
   },
