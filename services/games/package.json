@@ -10,7 +10,12 @@
     "test:cov:unit": " vitest run --coverage",
     "pretest:e2e": "prisma migrate deploy",
     "test:e2e": " vitest run --config ./tests/e2e/vitest.config.e2e.ts",
-    "test:cov:e2e": " vitest run --config ./tests/e2e/vitest.config.e2e.ts --coverage"
+    "test:cov:e2e": " vitest run --config ./tests/e2e/vitest.config.e2e.ts --coverage",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:generate": "prisma generate",
+    "db:studio": "prisma studio",
+    "db:seed": "pnpm prisma db seed"
   },
   "dependencies": {
     "@nestjs/common": "^11.1.17",
