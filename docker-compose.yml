@@ -31,6 +31,7 @@ services:
     environment:
       CLUSTER_ID: "kafka-cluster-id"
       KAFKA_NODE_ID: "1"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
       KAFKA_PROCESS_ROLES: "broker,controller"
       KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka:9093"
       KAFKA_CONTROLLER_QUORUM_BOOTSTRAP_SERVERS: "kafka:9093"
