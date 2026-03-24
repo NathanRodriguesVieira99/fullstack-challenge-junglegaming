@@ -1,4 +1,4 @@
-import { resolve } from "node:path";
+import path, { resolve } from "node:path";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
@@ -27,6 +27,11 @@ export default defineConfig({
           statements: 70,
         },
       },
+    },
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "../../src"),
     },
   },
 });
