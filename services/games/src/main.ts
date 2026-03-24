@@ -5,9 +5,23 @@ import { env } from "./_config/env";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
-  const port = env.PORT;
-  await app.listen(port, "0.0.0.0");
-  console.log(`Games service running on port ${port}`);
+
+  /* usado para transformar o service em consumer */
+  app.connectMicroservice({
+    options: {
+      client: {
+        brokers: ["kafka:29092"], // fora do Docker => localhost:9092
+      },
+      consumer: {
+        groupId: "games-consumer",
+      },
+    },
+  });
+
+  await app.startAllMicroservices();
+  await app.listen(env.PORT);
+
+  console.log(`Games service running on port ${env.PORT}`);
 }
 
 bootstrap();
