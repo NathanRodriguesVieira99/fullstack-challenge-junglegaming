@@ -3,12 +3,19 @@ enum TRANSACTION_TYPE {
   DEBIT
 }
 
+enum TRANSACTION_STATUS {
+  PENDING
+  CONFIRMED
+  FAILED
+}
+
 /* Entidade responsável pelas transações */
 model Transaction {
-  id        String           @id @default(uuid())
+  id        String             @id @default(uuid())
   type      TRANSACTION_TYPE
+  status    TRANSACTION_STATUS
   amount    BigInt
-  createdAt DateTime         @default(now()) @map("created_at")
+  createdAt DateTime           @default(now()) @map("created_at")
 
   /* relacionamento 1:N */
   walletId String? @map("wallet_id")
