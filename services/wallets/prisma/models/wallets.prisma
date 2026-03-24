@@ -1,0 +1,13 @@
+/* Entidade responsável pela carteira do jogador */
+model Wallet {
+  id        String   @id @default(uuid())
+  playerId  String
+  balance   BigInt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  transactions Transaction[]
+  player       Player?
+
+  @@map("wallets")
+}
