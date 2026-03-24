@@ -10,7 +10,9 @@
 
     /* Paths */
     "paths": {
-      "@styles/*": ["./src/styles/*"]
+      "@/*": ["./src/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@presentation/*": ["./src/presentation/*"]
     },
 
     /* Bundler mode */
