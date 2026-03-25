@@ -3,6 +3,7 @@ import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import type { MicroserviceOptions } from "@nestjs/microservices";
 import { env, Swagger } from "./_config";
+import { Logger } from "@nestjs/common";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
@@ -23,7 +24,7 @@ async function bootstrap(): Promise<void> {
   await app.startAllMicroservices();
   await app.listen(env.PORT);
 
-  console.log(`Wallets service running on port ${env.PORT}`);
+  Logger.log(`Wallets service running on http://localhost:${env.PORT}`);
 }
 
 bootstrap();
