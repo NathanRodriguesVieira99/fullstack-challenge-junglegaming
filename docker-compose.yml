@@ -88,6 +88,8 @@ services:
       timeout: 5s
       retries: 15
       start_period: 30s
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
 
   # ---------------------------------------------------------------------------
   # Kong (API Gateway — DB-less / declarative)
