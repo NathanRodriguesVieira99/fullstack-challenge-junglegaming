@@ -2,6 +2,8 @@ import { Module } from "@nestjs/common";
 import { DatabaseModule } from "@db/database.module";
 import { ClientsModule, Transport } from "@nestjs/microservices";
 
+import { GameGateway } from "@gateways/websockets.gateway";
+
 import { GamesController } from "@controllers/games/games.controller";
 import { HealthController } from "@controllers/health/health.controller";
 
@@ -26,6 +28,6 @@ import { RoundsService } from "@services/games/rounds/rounds.service";
     ]),
   ],
   controllers: [GamesController, HealthController],
-  providers: [BetService, BetsService, RoundsService],
+  providers: [GameGateway, BetService, BetsService, RoundsService],
 })
 export class AppModule {}
