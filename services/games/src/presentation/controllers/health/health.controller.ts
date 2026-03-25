@@ -1,8 +1,12 @@
 import { Controller, Get } from "@nestjs/common";
 import { HealthCheckResponseDto } from "../../dtos/health-check-response.dto";
+import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 
+@ApiTags("Health")
 @Controller()
 export class HealthController {
+  @ApiOperation({ summary: "Check service health", operationId: "healthCheck" })
+  @ApiResponse({ type: HealthCheckResponseDto, status: 200 })
   @Get("health")
   check(): HealthCheckResponseDto {
     return { status: "ok", service: "games" };
