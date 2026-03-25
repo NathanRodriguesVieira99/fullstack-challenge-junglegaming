@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { DatabaseModule } from "@db/database.module";
 
 import { HealthController } from "@controllers/health/health.controller";
 import { WalletsController } from "@controllers/wallets/wallets.controller";
@@ -9,6 +10,7 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
 
 @Module({
   imports: [
+    DatabaseModule,
     /* usado para transformar o service em producer */
     ClientsModule.register([
       {
