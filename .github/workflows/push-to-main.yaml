@@ -1,0 +1,39 @@
+name: Push to main CI pipeline
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  run-tests:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: "Setup NodeJs deps"
+        uses: ./.github/actions/setup-node-deps
+
+      - name: Run Game Service Unit Tests
+        working-directory: services/games
+        run: bun test:cov:unit
+
+      - name: Run Game Service E2E Tests
+        working-directory: services/games
+        run: bun test:cov:e2e
+
+      - name: Run Wallets Service Unit Tests
+        working-directory: services/wallets
+        run: bun test:cov:unit
+
+      - name: Run Wallets Service E2E Tests
+        working-directory: services/wallets
+        run: bun test:cov:e2e
+
+      - name: Run Game Service Tests
+        working-directory: frontend
+        run: bun test:cov
+
+        ## TODO => Adicionar playwright para E2E do frontend
