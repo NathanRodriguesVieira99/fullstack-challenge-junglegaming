@@ -1,4 +1,6 @@
 name: Setup NodeJs dependencies
+description: "Setup Bun and Node.js, then install dependencies with Bun"
+
 runs:
   using: "composite"
   steps:
