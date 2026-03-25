@@ -132,6 +132,9 @@ services:
       - "4001:4001"
     env_file:
       - ./services/games/.env
+    volumes:
+      - ./services/games:/app
+      - /app/node_modules
     depends_on:
       postgres:
         condition: service_healthy
@@ -155,6 +158,9 @@ services:
       - "4002:4002"
     env_file:
       - ./services/wallets/.env
+    volumes:
+      - ./services/wallets:/app
+      - /app/node_modules
     depends_on:
       postgres:
         condition: service_healthy
