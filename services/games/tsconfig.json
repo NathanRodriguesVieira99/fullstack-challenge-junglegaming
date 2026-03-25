@@ -24,7 +24,9 @@
       "@services/*": ["./src/application/services/*"],
       "@dtos/*": ["./src/presentation/dtos/*"],
       "@db/*": ["./src/infrastructure/database/*"],
-      "@gateways/*": ["./src/presentation/gateways/*"]
+      "@gateways/*": ["./src/presentation/gateways/*"],
+      "@models/*": ["./src/domain/entities/*"],
+      "repos/*": ["./src/domain/repositories/*"]
     },
     "types": ["vitest/globals"]
   },
