@@ -1,90 +1,6 @@
 {
   "openapi": "3.0.0",
   "paths": {
-    "/games/rounds/current": {
-      "get": {
-        "operationId": "GamesController_currentRound",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "tags": [
-          "Games"
-        ]
-      }
-    },
-    "/games/rounds/history": {
-      "get": {
-        "operationId": "GamesController_roundHistory",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "tags": [
-          "Games"
-        ]
-      }
-    },
-    "/games/rounds/{roundId}/verify": {
-      "get": {
-        "operationId": "GamesController_verify",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "tags": [
-          "Games"
-        ]
-      }
-    },
-    "/games/bets/me": {
-      "get": {
-        "operationId": "GamesController_bets",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        },
-        "tags": [
-          "Games"
-        ]
-      }
-    },
-    "/games/bet": {
-      "post": {
-        "operationId": "GamesController_bet",
-        "parameters": [],
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "tags": [
-          "Games"
-        ]
-      }
-    },
-    "/games/bet/cashout": {
-      "post": {
-        "operationId": "GamesController_cashout",
-        "parameters": [],
-        "responses": {
-          "201": {
-            "description": ""
-          }
-        },
-        "tags": [
-          "Games"
-        ]
-      }
-    },
     "/health": {
       "get": {
         "operationId": "healthCheck",
@@ -104,6 +20,90 @@
         "summary": "Check service health",
         "tags": [
           "Health"
+        ]
+      }
+    },
+    "/games/bet": {
+      "post": {
+        "operationId": "betController_bet",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Bet"
+        ]
+      }
+    },
+    "/games/bet/cashout": {
+      "post": {
+        "operationId": "betController_cashout",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Bet"
+        ]
+      }
+    },
+    "/games/bets/me": {
+      "get": {
+        "operationId": "betsController_bets",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Bets"
+        ]
+      }
+    },
+    "/games/rounds/current": {
+      "get": {
+        "operationId": "roundsController_currentRound",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Rounds"
+        ]
+      }
+    },
+    "/games/rounds/history": {
+      "get": {
+        "operationId": "roundsController_roundHistory",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Rounds"
+        ]
+      }
+    },
+    "/games/rounds/{roundId}/verify": {
+      "get": {
+        "operationId": "roundsController_verify",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Rounds"
         ]
       }
     }

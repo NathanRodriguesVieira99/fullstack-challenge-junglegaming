@@ -23,12 +23,12 @@
         ]
       }
     },
-    "/wallets": {
-      "post": {
-        "operationId": "WalletsController_createPlayerWallet",
+    "/wallets/me": {
+      "get": {
+        "operationId": "getWalletsController_getPlayerBalance",
         "parameters": [],
         "responses": {
-          "201": {
+          "200": {
             "description": ""
           }
         },
@@ -37,12 +37,12 @@
         ]
       }
     },
-    "/wallets/me": {
-      "get": {
-        "operationId": "WalletsController_getPlayerBalance",
+    "/wallets": {
+      "post": {
+        "operationId": "createWalletsController_createPlayerWallet",
         "parameters": [],
         "responses": {
-          "200": {
+          "201": {
             "description": ""
           }
         },
