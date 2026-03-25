@@ -4,7 +4,17 @@ import { defineConfig } from "vitest/config";
 export default defineConfig({
   test: {
     include: ["**/*.{spec,test}.{ts,tsx}"],
-    reporters: [["verbose", { suiteName: "Frontend tests" }]],
+    reporters: [
+      "verbose",
+      [
+        "github-actions",
+        {
+          jobSummary: {
+            enabled: true,
+          },
+        },
+      ],
+    ],
     environment: "jsdom",
     root: "./",
     globals: true,
