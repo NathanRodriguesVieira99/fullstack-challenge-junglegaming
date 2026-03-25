@@ -1,23 +1,22 @@
+// Entidade responsável pela aposta
+model Bet {
+  id          String     @id @default(uuid())
+  status      BET_STATUS
+  playerId    String     @map("player_id")
+  amount      BigInt
+  cashedOutAt DateTime   @map("cashed_out_at")
+  createdAt   DateTime   @default(now()) @map("created_at")
+
+  //  relacionamento 1:N
+  roundId String @map("round_id")
+  round   Round  @relation(fields: [roundId], references: [id])
+
+  @@map("bets")
+}
+
 enum BET_STATUS {
   PENDING
   WON
   LOST
   CASHED_OUT
-}
-
-/* Entidade responsável pela aposta */
-model Bet {
-  id          String     @id @default(uuid())
-  status      BET_STATUS
-  amount      BigInt
-  cashedOutAt DateTime   @map("cashed_out_at")
-  createdAt   DateTime   @default(now()) @map("created_at")
-
-  playerId String @map("player_id")
-
- /* relacionamento 1:N */
-  roundId String @map("round_id")
-  round   Round  @relation(fields: [roundId], references: [id])
-
-  @@map("bets")
 }

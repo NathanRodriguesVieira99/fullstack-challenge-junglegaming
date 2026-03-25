@@ -1,23 +1,21 @@
+// Entidade responsável pela rodada
+model Round {
+  id                 String       @id @default(uuid())
+  status             ROUND_STATUS
+  crashPoint         Float        @map("crash_point")
+  startTime          DateTime     @default(now()) @map("start_time")
+  endTime            DateTime     @map("end_time")
+  provablyFairHash   String       @map("provably_fair_hash")
+  provablyFairSalt   String       @map("provably_fair_salt")
+  provablyFairResult String       @map("provably_fair_result")
+  bets               Bet[]
+
+  @@map("rounds")
+}
+
 enum ROUND_STATUS {
   WAITING
   RUNNING
   CRASHED
   FINALIZED
-}
-
-/* Entidade responsável pela rodada */
-model Round {
-  id         String       @id @default(uuid())
-  status     ROUND_STATUS
-  crashPoint Float        @map("crash_point")
-  startTime  DateTime     @default(now()) @map("start_time")
-  endTime    DateTime     @map("end_time")
-
-  provablyFairHash   String @map("provably_fair_hash")
-  provablyFairSalt   String @map("provably_fair_salt")
-  provablyFairResult String @map("provably_fair_result")
-
-  bets Bet[]
-
-  @@map("rounds")
 }
