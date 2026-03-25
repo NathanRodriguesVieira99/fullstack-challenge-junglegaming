@@ -1,0 +1,4 @@
+@base_url=http://localhost:4001
+
+###
+GET {{base_url}}/health
