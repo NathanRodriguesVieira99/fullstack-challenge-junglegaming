@@ -12,7 +12,7 @@ export const Swagger = (app: INestApplication) => {
 
   const document = SwaggerModule.createDocument(app, config);
 
-  SwaggerModule.setup("wallets", app, document);
+  SwaggerModule.setup("wallets-docs", app, document);
 
   if (process.env.NODE_ENV === "development") {
     const specFile = resolve(__dirname, "../../../swagger.json");
@@ -20,7 +20,9 @@ export const Swagger = (app: INestApplication) => {
     const spec = JSON.stringify(document, null, 2);
 
     writeFile(specFile, spec).then(() => {
-      Logger.log("[Wallets] - Swagger spec generated");
+      Logger.log(
+        "[Wallets] - Swagger spec generated! Docs available on http://localhost:4002/wallets-docs",
+      );
     });
   }
 };
