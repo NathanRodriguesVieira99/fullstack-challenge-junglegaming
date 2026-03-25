@@ -74,6 +74,6 @@ jobs:
       # roda testes unitários do frontend
       - name: Run Frontend Tests
         working-directory: frontend
-        run: bun test:cov
+        run: bun test:cov:unit
 
         ## TODO => Adicionar playwright para E2E do frontend
