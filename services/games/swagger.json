@@ -1,0 +1,140 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/games/rounds/current": {
+      "get": {
+        "operationId": "GamesController_currentRound",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Games"
+        ]
+      }
+    },
+    "/games/rounds/history": {
+      "get": {
+        "operationId": "GamesController_roundHistory",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Games"
+        ]
+      }
+    },
+    "/games/rounds/{roundId}/verify": {
+      "get": {
+        "operationId": "GamesController_verify",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Games"
+        ]
+      }
+    },
+    "/games/bets/me": {
+      "get": {
+        "operationId": "GamesController_bets",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Games"
+        ]
+      }
+    },
+    "/games/bet": {
+      "post": {
+        "operationId": "GamesController_bet",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Games"
+        ]
+      }
+    },
+    "/games/bet/cashout": {
+      "post": {
+        "operationId": "GamesController_cashout",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Games"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "healthCheck",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthCheckResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Check service health",
+        "tags": [
+          "Health"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Service de Games",
+    "description": "Documentação referente ao serviço de Games",
+    "version": "0.0.1",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "HealthCheckResponseDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": 200
+          },
+          "service": {
+            "type": "string",
+            "example": "ok"
+          }
+        },
+        "required": [
+          "status",
+          "service"
+        ]
+      }
+    }
+  }
+}

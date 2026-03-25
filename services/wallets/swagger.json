@@ -1,0 +1,84 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "healthCheck",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthCheckResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Check service health",
+        "tags": [
+          "Health"
+        ]
+      }
+    },
+    "/wallets": {
+      "post": {
+        "operationId": "WalletsController_createPlayerWallet",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Wallets"
+        ]
+      }
+    },
+    "/wallets/me": {
+      "get": {
+        "operationId": "WalletsController_getPlayerBalance",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Wallets"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Service de Wallets",
+    "description": "Documentação referente ao serviço de Wallet",
+    "version": "0.0.1",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "HealthCheckResponseDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": 200
+          },
+          "service": {
+            "type": "string",
+            "example": "ok"
+          }
+        },
+        "required": [
+          "status",
+          "service"
+        ]
+      }
+    }
+  }
+}
