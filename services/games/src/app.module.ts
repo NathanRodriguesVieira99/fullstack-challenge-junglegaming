@@ -1,19 +1,17 @@
-import { Module } from "@nestjs/common";
-import { DatabaseModule } from "@db/database.module";
 import { ClientsModule, Transport } from "@nestjs/microservices";
 
+import { Module } from "@nestjs/common";
+import { AuthModule } from "./infrastructure/auth/auth.module";
+import { DatabaseModule } from "@db/database.module";
+
 import { GameGateway } from "@gateways/websockets.gateway";
-
-import { GamesController } from "@controllers/games/games.controller";
-import { HealthController } from "@controllers/health/health.controller";
-
-import { BetService } from "@services/games/bet/bet.service";
-import { BetsService } from "@services/games/bets/bets.service";
-import { RoundsService } from "@services/games/rounds/rounds.service";
+import { httpModule } from "./presentation/http.module";
 
 @Module({
   imports: [
+    httpModule,
     DatabaseModule,
+    AuthModule,
     /* usado para transformar o service em producer */
     ClientsModule.register([
       {
@@ -27,7 +25,6 @@ import { RoundsService } from "@services/games/rounds/rounds.service";
       },
     ]),
   ],
-  controllers: [GamesController, HealthController],
-  providers: [GameGateway, BetService, BetsService, RoundsService],
+  providers: [GameGateway],
 })
 export class AppModule {}
