@@ -16,6 +16,10 @@ jobs:
       - name: "Setup NodeJs deps"
         uses: ./.github/actions/setup-node-deps
 
+      - name: Generate Prisma Client (Games)
+        working-directory: services/games
+        run: bun db:generate
+
       - name: Run Game Service Unit Tests
         working-directory: services/games
         run: bun test:cov:unit
@@ -23,6 +27,10 @@ jobs:
       - name: Run Game Service E2E Tests
         working-directory: services/games
         run: bun test:cov:e2e
+
+      - name: Generate Prisma Client (Wallets)
+        working-directory: services/wallets
+        run: bun db:generate
 
       - name: Run Wallets Service Unit Tests
         working-directory: services/wallets
