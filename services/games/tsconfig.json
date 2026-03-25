@@ -23,7 +23,8 @@
       "@controllers/*": ["./src/presentation/controllers/*"],
       "@services/*": ["./src/application/services/*"],
       "@dtos/*": ["./src/presentation/dtos/*"],
-      "@db/*": ["./src/infrastructure/database/*"]
+      "@db/*": ["./src/infrastructure/database/*"],
+      "@gateways/*": ["./src/presentation/gateways/*"]
     },
     "types": ["vitest/globals"]
   },
