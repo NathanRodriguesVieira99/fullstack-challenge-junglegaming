@@ -72,7 +72,7 @@ jobs:
         run: bun test:cov:e2e
 
       # roda testes unitários do frontend
-      - name: Run Game Service Tests
+      - name: Run Frontend Tests
         working-directory: frontend
         run: bun test:cov
 
