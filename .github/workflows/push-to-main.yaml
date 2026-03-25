@@ -9,6 +9,7 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
 
+    # Sobe o banco de dados no docker
     services:
       ### !! FIX => receber variáveis de ambiente via secrets e criar ambiente isolado para testes
       postgresql-test:
@@ -20,38 +21,59 @@ jobs:
           POSTGRES_PASSWORD: admin
           POSTGRES_DB: postgres
           POSTGRES_EXTRA_DATABASES: games,wallets,admin
+        volumes:
+          - ./docker/postgres/init-databases.sh:/docker-entrypoint-initdb.d/init-databases.sh:ro
 
     steps:
+      # faz o checkout do código
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # faz o setup do node/bun e instala as dependencias
       - name: "Setup NodeJs deps"
         uses: ./.github/actions/setup-node-deps
 
+      # copia o .env ou .env.example
+      - name: Copy .env (Games)
+        run: cp .env.example .env || cp .env .env
+        working-directory: services/games
+
+      # gera o cliente do Prisma ORM
       - name: Generate Prisma Client (Games)
         working-directory: services/games
         run: bun db:generate
 
+        # roda testes unitários do serviço games
       - name: Run Game Service Unit Tests
         working-directory: services/games
         run: bun test:cov:unit
 
+        # roda testes e2e do serviço games
       - name: Run Game Service E2E Tests
         working-directory: services/games
         run: bun test:cov:e2e
 
+      # copia o .env ou .env.example
+      - name: Copy .env (Wallets)
+        run: cp .env.example .env || cp .env .env
+        working-directory: services/games
+
+      # gera o cliente do Prisma ORM
       - name: Generate Prisma Client (Wallets)
         working-directory: services/wallets
         run: bun db:generate
 
+        # roda testes unitários do serviço wallets
       - name: Run Wallets Service Unit Tests
         working-directory: services/wallets
         run: bun test:cov:unit
 
+        # roda testes e2e do serviço wallets
       - name: Run Wallets Service E2E Tests
         working-directory: services/wallets
         run: bun test:cov:e2e
 
+      # roda testes unitários do frontend
       - name: Run Game Service Tests
         working-directory: frontend
         run: bun test:cov
