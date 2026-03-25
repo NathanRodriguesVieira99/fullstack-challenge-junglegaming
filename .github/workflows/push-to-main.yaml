@@ -9,6 +9,21 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
 
+    services:
+      ### !! FIX => receber variáveis de ambiente via secrets e criar ambiente isolado para testes
+      postgresql-test:
+        image: postgres:18.3-alpine
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+          POSTGRES_DB: postgres
+          POSTGRES_EXTRA_DATABASES: games,wallets,admin
+        volumes:
+          - postgres_data:/var/lib/postgresql/data
+          - ./docker/postgres/init-databases.sh:/docker-entrypoint-initdb.d/init-databases.sh:ro
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
