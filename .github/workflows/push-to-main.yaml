@@ -20,8 +20,6 @@ jobs:
           POSTGRES_PASSWORD: admin
           POSTGRES_DB: postgres
           POSTGRES_EXTRA_DATABASES: games,wallets,admin
-        volumes:
-          - ./docker/postgres/init-databases.sh:/docker-entrypoint-initdb.d/init-databases.sh:ro
 
     steps:
       - name: Checkout code
