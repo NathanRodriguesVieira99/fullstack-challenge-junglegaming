@@ -1,6 +1,9 @@
 {
   "name": "crash-game",
   "private": true,
+  "engines": {
+    "node": ">=20 <=25"
+  },
   "workspaces": [
     "services/*",
     "packages/*",
