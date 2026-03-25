@@ -1,15 +1,14 @@
 import "reflect-metadata";
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
-import { Transport, type MicroserviceOptions } from "@nestjs/microservices";
-import { env } from "./_config/env";
+import type { MicroserviceOptions } from "@nestjs/microservices";
+import { env, Swagger } from "./_config";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
 
   /* usado para transformar o service em consumer */
-  app.connectMicroservice({
-    transport: Transport.KAFKA,
+  app.connectMicroservice<MicroserviceOptions>({
     options: {
       client: {
         brokers: ["kafka:29092"], // fora do Docker => localhost:9092
@@ -20,6 +19,7 @@ async function bootstrap(): Promise<void> {
     },
   });
 
+  Swagger(app);
   await app.startAllMicroservices();
   await app.listen(env.PORT);
 
