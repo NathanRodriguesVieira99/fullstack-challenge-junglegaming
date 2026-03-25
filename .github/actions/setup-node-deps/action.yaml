@@ -12,6 +12,11 @@ runs:
       with:
         node-version-file: "package.json"
 
+    - name: Install backend dependencies
+      shell: bash
+      run: bun install --frozen-lockfile
+
     - name: Install dependencies
+      working-directory: frontend
       shell: bash
       run: bun install --frozen-lockfile
