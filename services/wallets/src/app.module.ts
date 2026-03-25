@@ -1,15 +1,14 @@
+import { ClientsModule, Transport } from "@nestjs/microservices";
+
 import { Module } from "@nestjs/common";
 import { DatabaseModule } from "@db/database.module";
-
-import { HealthController } from "@controllers/health/health.controller";
-import { WalletsController } from "@controllers/wallets/wallets.controller";
-
-import { CreateWalletsService } from "@services/wallets/create-wallets.service";
-import { GetWalletsService } from "@services/wallets/get-wallet.service";
-import { ClientsModule, Transport } from "@nestjs/microservices";
+import { AuthModule } from "./infrastructure/auth/auth.module";
+import { httpModule } from "./presentation/http.module";
 
 @Module({
   imports: [
+    httpModule,
+    AuthModule,
     DatabaseModule,
     /* usado para transformar o service em producer */
     ClientsModule.register([
@@ -24,7 +23,5 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
       },
     ]),
   ],
-  controllers: [HealthController, WalletsController],
-  providers: [CreateWalletsService, GetWalletsService],
 })
 export class AppModule {}
