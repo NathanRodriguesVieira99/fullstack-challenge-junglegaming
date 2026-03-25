@@ -28,9 +28,9 @@ export class DatabaseService
   async onModuleInit() {
     try {
       await this.$connect();
-      Logger.log("Database connection OK!");
+      Logger.log("[Wallets] Database connection OK!");
     } catch (err) {
-      Logger.error(`Database connection failed ${err}`);
+      Logger.error(`[Wallets] Database connection failed ${err}`);
       throw err;
     }
   }
@@ -38,9 +38,9 @@ export class DatabaseService
   async onModuleDestroy() {
     try {
       await this.$disconnect();
-      Logger.log("Database disconnected!");
+      Logger.log("[Wallets] Database disconnected!");
     } catch (err) {
-      Logger.error(`Error disconnecting database: ${err}`);
+      Logger.error(`[Wallets] Error disconnecting database: ${err}`);
     }
   }
 }
