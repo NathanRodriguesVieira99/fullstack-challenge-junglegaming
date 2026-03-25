@@ -8,9 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest run --bail 1",
-    "test:watch": "vitest watch --bail 1",
-    "test:cov": "vitest run --coverage",
+    "test:unit": "vitest run --bail 1",
+    "test:watch:unit": "vitest watch --bail 1",
+    "test:cov:unit": "vitest run --coverage",
     "test:e2e:ui": " playwright test --ui --reporter null",
     "test:e2e:headed": " playwright test --headed  --reporter null"
   },
