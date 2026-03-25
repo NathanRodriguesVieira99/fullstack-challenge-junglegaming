@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 4001
 
-CMD ["bun", "run", "src/main.ts"]
+CMD ["sh", "-c", "bun db:migrate:deploy && bun run src/main.ts"]
