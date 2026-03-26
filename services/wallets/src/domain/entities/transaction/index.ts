@@ -1,7 +1,6 @@
-import { Wallet } from "../wallets";
+import { Wallet } from "../wallet";
 
 type TRANSACTION_TYPE = "CREDIT" | "DEBIT";
-
 type TRANSACTION_STATUS = "PENDING" | "CONFIRMED" | "FAILED";
 
 interface TransactionProps {
@@ -10,7 +9,7 @@ interface TransactionProps {
   status: TRANSACTION_STATUS;
   amount: bigint;
   createdAt: Date;
-  walletId?: string | null;
+  walletId: string;
   wallet: Wallet;
 }
 
@@ -20,6 +19,6 @@ export class Transaction implements TransactionProps {
   status: TRANSACTION_STATUS;
   amount: bigint;
   createdAt: Date;
-  walletId?: string | null;
+  walletId: string;
   wallet: Wallet;
 }
