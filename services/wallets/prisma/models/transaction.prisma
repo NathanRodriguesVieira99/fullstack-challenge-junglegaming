@@ -9,17 +9,17 @@ enum TRANSACTION_STATUS {
   FAILED
 }
 
-/* Entidade responsável pelas transações */
 model Transaction {
   id        String             @id @default(uuid())
   type      TRANSACTION_TYPE
-  status    TRANSACTION_STATUS
+  status    TRANSACTION_STATUS @default(PENDING)
   amount    BigInt
   createdAt DateTime           @default(now()) @map("created_at")
 
-  /* relacionamento 1:N */
-  walletId String? @map("wallet_id")
-  wallet   Wallet? @relation(fields: [walletId], references: [id])
+  // relacionamento 1:N
+  walletId String @map("wallet_id")
+  wallet   Wallet @relation(fields: [walletId], references: [id])
 
+  @@index([walletId]) // => otimiza as queries
   @@map("transactions")
 }
