@@ -1,4 +1,9 @@
-name: Push to main CI pipeline
+name:
+  Push to main CI pipeline
+
+  ### !! FIX [] => receber variáveis de ambiente no service do postgres via secrets e criar ambiente isolado para testes
+  
+  ### !! FIX [] => ao invés de copiar o .env.example com as variáveis exatas do .env, talvez usar secrets ou alguma outra forma de ocultar essas variáveis
 
 on:
   push:
@@ -11,7 +16,6 @@ jobs:
 
     # Sobe o banco de dados no docker
     services:
-      ### !! FIX => receber variáveis de ambiente via secrets e criar ambiente isolado para testes
       postgresql-test:
         image: postgres:18.3-alpine
         ports:
