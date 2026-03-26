@@ -1,3 +1,74 @@
+import type { Wallet } from "@models/wallet";
 import type { WalletsRepositoryContract } from "./wallets.repository.contract";
+import { DatabaseService } from "@db/database.service";
+import { Transaction } from "@models/transaction";
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
+import { sanitizeBigInt } from "@utils/sanitize-bigInt";
+import type { createWalletDto } from "@/presentation/dtos/wallet.dto";
 
-export class WalletsRepositoryImplementation implements WalletsRepositoryContract {}
+@Injectable()
+export class WalletsRepositoryImplementation implements WalletsRepositoryContract {
+  constructor(private readonly db: DatabaseService) {}
+
+  async createWallet({ playerId, balance }: createWalletDto): Promise<Wallet> {
+    const result = await this.db.$transaction(async () => {
+      const playerExists = await this.db.wallet.findFirst({
+        where: {
+          playerId,
+        },
+      });
+
+      const wallet = await this.db.wallet.create({
+        data: {
+          playerId: playerId,
+          balance: balance,
+        },
+        include: {
+          player: true,
+          transactions: true,
+        },
+      });
+
+      if (playerExists) throw new ConflictException("Wallet already exists");
+
+      return wallet;
+    });
+    return sanitizeBigInt(result);
+  }
+
+  async getWalletByPlayerId(playerId: string): Promise<Wallet> {
+    const result = await this.db.$transaction(async (prisma) => {
+      const wallet = await prisma.wallet.findUnique({
+        where: { playerId },
+        include: {
+          transactions: true,
+          player: true,
+        },
+      });
+
+      if (!wallet) throw new NotFoundException("Wallet not found!");
+
+      return wallet;
+    });
+
+    return sanitizeBigInt(result);
+  }
+
+  // async getByPlayerId(playerId: string): Promise<Wallet | null> {}
+
+  // async creditTransaction(
+  //   id: string,
+  //   walletId: string,
+  //   amount: bigint,
+  // ): Promise<Transaction> {}
+
+  // async debitTransaction(
+  //   transactionId: string,
+  //   walletId: string,
+  //   amount: bigint,
+  // ): Promise<Transaction> {}
+}
