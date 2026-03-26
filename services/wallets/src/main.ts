@@ -11,7 +11,9 @@ async function bootstrap(): Promise<void> {
   /* usado para transformar o service em consumer */
   app.connectMicroservice<MicroserviceOptions>({
     options: {
+      name: "wallets-consumer",
       client: {
+        clientId: "WALLETS_SERVICE_CONSUMER",
         brokers: ["kafka:29092"], // fora do Docker => localhost:9092
       },
       consumer: {
