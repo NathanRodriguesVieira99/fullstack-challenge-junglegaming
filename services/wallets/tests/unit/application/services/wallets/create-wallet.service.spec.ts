@@ -69,7 +69,6 @@ describe("CreateWalletService", () => {
 
         const result = await service.execute(wallet);
 
-        console.log(result);
         expect(result).toHaveProperty("balance");
         expect(result).toHaveProperty("playerId");
         expect(result.balance).toBe(1000n);
