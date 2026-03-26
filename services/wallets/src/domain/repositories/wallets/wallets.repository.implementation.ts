@@ -6,6 +6,7 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from "@nestjs/common";
 import { sanitizeBigInt } from "@utils/sanitize-bigInt";
 import type { createWalletDto } from "@/presentation/dtos/wallet.dto";
@@ -22,6 +23,20 @@ export class WalletsRepositoryImplementation implements WalletsRepositoryContrac
         },
       });
 
+      if (playerExists) throw new ConflictException("Wallet already exists");
+      if (!playerExists) throw new NotFoundException("User not found");
+
+      const verifyBalance = () => {
+        if (balance < 1n)
+          throw new UnauthorizedException("Balance should not be negative");
+
+        if (balance > 1000n)
+          throw new UnauthorizedException("Balance should not be over 1000");
+
+        return;
+      };
+      verifyBalance();
+
       const wallet = await this.db.wallet.create({
         data: {
           playerId: playerId,
@@ -32,8 +47,6 @@ export class WalletsRepositoryImplementation implements WalletsRepositoryContrac
           transactions: true,
         },
       });
-
-      if (playerExists) throw new ConflictException("Wallet already exists");
 
       return wallet;
     });
