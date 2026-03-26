@@ -31,9 +31,9 @@ jobs:
       - name: "Setup NodeJs deps"
         uses: ./.github/actions/setup-node-deps
 
-      # copia o .env ou .env.example do serviço games
+      # copia o .env  do serviço games
       - name: Copy .env (Games)
-        run: cp .env.example .env || cp .env .env
+        run: cp .env .env
         working-directory: services/games
 
       # gera o cliente do Prisma ORM
@@ -51,9 +51,9 @@ jobs:
         working-directory: services/games
         run: bun test:cov:e2e
 
-      # copia o .env ou .env.example do serviço wallets
+      # copia o .env do serviço wallets
       - name: Copy .env (Wallets)
-        run: cp .env.example .env || cp .env .env
+        run:  cp .env .env
         working-directory: services/wallets
 
       # gera o cliente do Prisma ORM
