@@ -1,16 +1,16 @@
 import { describe, beforeEach, it, expect } from "vitest";
 import { Test, TestingModule } from "@nestjs/testing";
-import { getWalletsController } from "../../../../../src/presentation/controllers/wallets/get-wallet.controller";
+import { GetWalletController } from "../../../../../src/presentation/controllers/wallets/get-wallet.controller";
 
-describe("BetController", () => {
-  let controller: getWalletsController;
+describe("GetWalletsController", () => {
+  let controller: GetWalletController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [getWalletsController],
+      controllers: [GetWalletController],
     }).compile();
 
-    controller = module.get<getWalletsController>(getWalletsController);
+    controller = module.get<GetWalletController>(GetWalletController);
   });
 
   it("should be defined", () => {
