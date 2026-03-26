@@ -25,9 +25,19 @@ export class DatabaseService
     });
   }
 
+  /**
+    Criei essa função apenas para fins de facilitar o manuseio dos dados do prisma, 
+    ela vai sempre limpar o banco para evitar conflitos ao usar o usuário de teste do keycloak
+    */
+  async reset() {
+    await this.wallet.deleteMany();
+    Logger.log("[Wallets] Database reset !");
+  }
+
   async onModuleInit() {
     try {
       await this.$connect();
+      await this.reset();
       Logger.log("[Wallets] Database connection OK!");
     } catch (err) {
       Logger.error(`[Wallets] Database connection failed ${err}`);
