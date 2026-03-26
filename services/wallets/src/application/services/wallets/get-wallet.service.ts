@@ -1,9 +1,9 @@
+import { WalletsRepositoryContract } from "@/domain/repositories/wallets/wallets.repository.contract";
 import { Injectable } from "@nestjs/common";
-import { WalletsRepositoryImplementation } from "@repos/wallets/wallets.repository.implementation";
 
 @Injectable()
 export class GetWalletService {
-  constructor(private readonly repo: WalletsRepositoryImplementation) {}
+  constructor(private readonly repo: WalletsRepositoryContract) {}
 
   async execute(playerId: string) {
     return await this.repo.getWalletByPlayerId(playerId);

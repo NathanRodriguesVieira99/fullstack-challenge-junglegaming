@@ -8,7 +8,8 @@ import { CreateWalletController } from "./controllers/wallets/create-wallet.cont
 import { CreateWalletService } from "@/application/services/wallets/create-wallet.service";
 import { GetWalletService } from "@/application/services/wallets/get-wallet.service";
 
-import { WalletsRepositoryImplementation } from "@repos/wallets/wallets.repository.implementation";
+import { WalletsRepositoryContract } from "@/domain/repositories/wallets/wallets.repository.contract";
+import { WalletsRepositoryImplementation } from "@/domain/repositories/wallets/wallets.repository.implementation";
 
 @Module({
   imports: [
@@ -28,7 +29,10 @@ import { WalletsRepositoryImplementation } from "@repos/wallets/wallets.reposito
   ],
   controllers: [HealthController, GetWalletController, CreateWalletController],
   providers: [
-    WalletsRepositoryImplementation,
+    {
+      provide: WalletsRepositoryContract,
+      useClass: WalletsRepositoryImplementation,
+    },
     CreateWalletService,
     GetWalletService,
   ],
