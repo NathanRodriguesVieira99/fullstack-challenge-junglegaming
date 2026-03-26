@@ -1,10 +1,23 @@
 import { Global, Module } from "@nestjs/common";
-import { AuthController } from "./auth.controller";
-import { AuthService } from "./auth.service";
+import { HttpModule } from "@nestjs/axios";
+import { PassportModule } from "@nestjs/passport";
+import { JwtModule } from "@nestjs/jwt";
+import { env } from "@/_config";
+import { JwtStrategyService } from "./jwt/jwt-strategy.service";
 
 @Global()
 @Module({
-  providers: [AuthService],
-  controllers: [AuthController],
+  imports: [
+    HttpModule,
+    PassportModule,
+    JwtModule.registerAsync({
+      useFactory: async () => ({
+        publicKey: env.JWT_SECRET,
+        signOptions: { algorithm: "RS256" },
+      }),
+    }),
+  ],
+  providers: [JwtStrategyService],
+  controllers: [],
 })
 export class AuthModule {}
