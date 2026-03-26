@@ -1,9 +1,7 @@
 import { ClientsModule, Transport } from "@nestjs/microservices";
-
 import { Module } from "@nestjs/common";
 import { AuthModule } from "./infrastructure/auth/auth.module";
 import { DatabaseModule } from "@db/database.module";
-
 import { GameGateway } from "@gateways/websockets.gateway";
 import { httpModule } from "./presentation/http.module";
 

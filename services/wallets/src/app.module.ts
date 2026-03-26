@@ -1,8 +1,11 @@
 import { ClientsModule, Transport } from "@nestjs/microservices";
 
 import { Module } from "@nestjs/common";
+
 import { DatabaseModule } from "@db/database.module";
+
 import { AuthModule } from "./infrastructure/auth/auth.module";
+
 import { httpModule } from "./presentation/http.module";
 
 @Module({
