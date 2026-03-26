@@ -1,15 +1,15 @@
 import { ClientsModule, Transport } from "@nestjs/microservices";
 import { Module } from "@nestjs/common";
 
-import { HealthController } from "./controllers/health/health.controller";
-import { GetWalletController } from "./controllers/wallets/get-wallet.controller";
-import { CreateWalletController } from "./controllers/wallets/create-wallet.controller";
+import { HealthController } from "@controllers/health/health.controller";
+import { GetWalletController } from "@controllers/wallets/get-wallet.controller";
+import { CreateWalletController } from "@controllers/wallets/create-wallet.controller";
 
-import { CreateWalletService } from "@/application/services/wallets/create-wallet.service";
-import { GetWalletService } from "@/application/services/wallets/get-wallet.service";
+import { CreateWalletService } from "@services/wallets/create-wallet.service";
+import { GetWalletService } from "@services/wallets/get-wallet.service";
 
-import { WalletsRepositoryContract } from "@/domain/repositories/wallets/wallets.repository.contract";
-import { WalletsRepositoryImplementation } from "@/domain/repositories/wallets/wallets.repository.implementation";
+import { WalletsRepositoryContract } from "@repos/wallets/wallets.repository.contract";
+import { WalletsRepositoryImplementation } from "@repos/wallets/wallets.repository.implementation";
 
 @Module({
   imports: [
