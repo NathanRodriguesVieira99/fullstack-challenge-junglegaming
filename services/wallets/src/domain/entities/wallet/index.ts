@@ -1,5 +1,5 @@
-import type { Player } from "../player";
-import type { Transaction } from "../transaction";
+import { Player } from "../player";
+import { Transaction } from "../transaction";
 
 interface WalletProps {
   id: string;
@@ -7,8 +7,8 @@ interface WalletProps {
   balance: bigint;
   createdAt: Date;
   updatedAt: Date;
-  transactions: Transaction[];
-  player: Player;
+  player: Player | null;
+  transactions?: Transaction[];
 }
 
 export class Wallet implements WalletProps {
@@ -17,6 +17,6 @@ export class Wallet implements WalletProps {
   balance: bigint;
   createdAt: Date;
   updatedAt: Date;
-  transactions: Transaction[];
-  player: Player;
+  player: Player | null;
+  transactions?: Transaction[];
 }
