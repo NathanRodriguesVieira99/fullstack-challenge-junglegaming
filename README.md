@@ -23,6 +23,7 @@
 
 | Método | Endpoint | Auth | Descrição | Status |
 | ------ | ------------------------------- | ---- | ------------------------------------------ | ------- |
+| `POST` | `/wallets` | Sim | Cria carteira para o jogador autenticado | ⌛ Fazendo... |
 | `GET` | `/wallets/me` | Sim | Retorna carteira e saldo do jogador | ⌛ Fazendo... |
 
 > Crédito e débito **não** são expostos via REST — acontecem via message broker.
