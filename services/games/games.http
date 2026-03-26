@@ -1,4 +1,30 @@
 @base_url=http://localhost:4001
+# @keycloak_base_url=http://localhost:8080/realms/crash-game/protocol/openid-connect
+# @access_token={{keycloak_tokens.response.body.access_token}}
+# @refresh_token={{keycloak_tokens.response.body.refresh_token}}
 
 ###
+
+# @name Healthcheck
 GET {{base_url}}/health
+
+###
+
+# @name keycloak_tokens
+# POST {{keycloak_base_url}}/token
+# Content-Type: application/x-www-form-urlencoded
+
+# client_id=crash-game-client
+# &grant_type=password
+# &username=player
+# &password=player123
+# &scope=openid
+
+###
+
+# @name keycloak_userinfo
+# GET {{keycloak_base_url}}/userinfo
+# Authorization: Bearer {{access_token}}
+
+###
+
