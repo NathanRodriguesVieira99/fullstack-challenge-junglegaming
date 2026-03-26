@@ -1,4 +1,4 @@
-import { WalletsRepositoryContract } from "@/domain/repositories/wallets/wallets.repository.contract";
+import { WalletsRepositoryContract } from "../../../domain/repositories/wallets/wallets.repository.contract";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
