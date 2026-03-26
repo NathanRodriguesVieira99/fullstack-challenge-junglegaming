@@ -24,6 +24,7 @@ export class JwtStrategyService extends PassportStrategy(Strategy, "jwt") {
     });
   }
 
+  // objeto gerado => req.user.*
   async validate(payload: Payload) {
     return {
       userId: payload.sub,
