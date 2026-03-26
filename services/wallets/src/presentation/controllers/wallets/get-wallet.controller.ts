@@ -1,9 +1,9 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
+import { GetWalletService } from "@services/wallets/get-wallet.service";
 
-@Controller("wallets")
 @ApiTags("Wallets")
-export class getWalletsController {
-  @Get("me")
-  async getPlayerBalance() {}
+@Controller("wallets")
+export class GetWalletController {
+  constructor(private readonly service: GetWalletService) {}
 }
