@@ -1,8 +1,8 @@
-import type { Wallet } from "../wallets";
+import type { Wallet } from "../wallet";
 
 interface PlayerProps {
   id: string;
-  username?: string;
+  username?: string | null;
   createdAt: Date;
   updatedAt: Date;
   walletId: string;
@@ -11,7 +11,7 @@ interface PlayerProps {
 
 export class Player implements PlayerProps {
   id: string;
-  username?: string | undefined;
+  username?: string | null;
   createdAt: Date;
   updatedAt: Date;
   walletId: string;
