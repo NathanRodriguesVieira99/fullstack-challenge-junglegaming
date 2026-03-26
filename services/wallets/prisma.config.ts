@@ -5,8 +5,8 @@ export default defineConfig({
   schema: "prisma",
   migrations: {
     /*
-     Pasta migrations gerada dentro do Docker pois rodei o script `bun prisma migrate dev` 
-     via `docker compose wallets sh` pois o postgresql está configurado para rodar via Docker.
+   migrations devem ser geradas
+   via `docker compose wallets sh` pois o postgresql está configurado para rodar via Docker.
     */
     path: "prisma/migrations",
     seed: "tsx ./prisma/seed.ts",
