@@ -25,13 +25,33 @@
     },
     "/wallets/me": {
       "get": {
-        "operationId": "getWalletsController_getPlayerBalance",
+        "description": "Retorna os dados da carteira do jogador autenticado",
+        "operationId": "GetWallet",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Carteira retornada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createWalletDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário não autorizado (Token JWT inválido ou ausente)"
+          },
+          "404": {
+            "description": "Carteira não encontrada"
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Obter carteira do jogador",
         "tags": [
           "Wallets"
         ]
@@ -39,13 +59,33 @@
     },
     "/wallets": {
       "post": {
-        "operationId": "createWalletsController_createPlayerWallet",
+        "description": "Cria uma carteira para o jogador",
+        "operationId": "CreateWallet",
         "parameters": [],
         "responses": {
           "201": {
-            "description": ""
+            "description": "Carteira criada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/createWalletDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Usuário não autorizado (Token JWT inválido ou ausente)"
+          },
+          "409": {
+            "description": "Usuário já possui uma carteira"
           }
         },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Cria uma carteira para usuário autenticado com 1000 de saldo inicial",
         "tags": [
           "Wallets"
         ]
@@ -77,6 +117,26 @@
         "required": [
           "status",
           "service"
+        ]
+      },
+      "createWalletDto": {
+        "type": "object",
+        "properties": {
+          "playerId": {
+            "type": "string",
+            "example": "sdjkwejjhsdkmskdhjuedfsndjm...",
+            "format": "uuid"
+          },
+          "balance": {
+            "format": "int64",
+            "type": "integer",
+            "example": "1000",
+            "description": "é BigInt porém vira string após ser sanitizado"
+          }
+        },
+        "required": [
+          "playerId",
+          "balance"
         ]
       }
     }
