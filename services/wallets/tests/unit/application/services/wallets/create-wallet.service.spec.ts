@@ -1,30 +1,38 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { describe, beforeEach, it, expect, vi } from "vitest";
-import { CreateWalletService } from "../../../../../src/application/services/wallets/create-wallet.service";
-import { WalletsRepositoryContract } from "../../../../../src/domain/repositories/wallets/wallets.repository.contract";
-import { createWalletDto } from "@/presentation/dtos/wallet.dto";
 import {
   ConflictException,
   NotFoundException,
   UnauthorizedException,
 } from "@nestjs/common";
+import { describe, beforeEach, it, expect, vi } from "vitest";
 
-const mockWalletRepository = {
-  createWallet: vi.fn(),
-};
+import { CreateWalletService } from "../../../../../src/application/services/wallets/create-wallet.service";
 
-const mockKafkaProducer = {
-  emit: vi.fn(),
-};
+import { WalletsRepositoryContract } from "../../../../../src/domain/repositories/wallets/wallets.repository.contract";
 
-const wallet: createWalletDto & { id: string } = {
+// vi.hoisted => usado para isolar os mocks
+const { mockWalletRepository, mockKafkaProducer } = vi.hoisted(() => ({
+  mockWalletRepository: {
+    createWallet: vi.fn(),
+  },
+
+  mockKafkaProducer: {
+    emit: vi.fn(),
+  },
+}));
+
+const wallet = {
   id: "uuid-super-aleatório",
   playerId: "player123",
   balance: 1000n,
+  createdAt: new Date("2026-01-01"),
+  updatedAt: new Date("2024-02-01"),
+  player: { id: "player123", username: "player" },
+  transactions: [],
 };
 
 describe("CreateWalletService", () => {
-  let service: CreateWalletService;
+  let sut: CreateWalletService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -41,20 +49,22 @@ describe("CreateWalletService", () => {
       ],
     }).compile();
 
-    service = module.get<CreateWalletService>(CreateWalletService);
+    sut = module.get<CreateWalletService>(CreateWalletService);
   });
 
-  describe("Create Wallet", () => {
+  describe("SUT", () => {
     it("should be defined", () => {
-      expect(service).toBeDefined();
+      expect(sut).toBeDefined();
     });
+  });
 
+  describe("Create Wallet Service", () => {
     describe("Kafka", () => {
-      it('should emit "wallet.created" kafka event', async () => {
+      it("should emit wallet.created event after creation", async () => {
         mockWalletRepository.createWallet.mockResolvedValue(wallet);
         mockKafkaProducer.emit.mockResolvedValue(undefined);
 
-        await service.execute(wallet);
+        await sut.execute(wallet);
 
         expect(mockKafkaProducer.emit).toHaveBeenCalledWith("wallet.created", {
           playerId: wallet.playerId,
@@ -67,10 +77,19 @@ describe("CreateWalletService", () => {
       it("should create a wallet with initial balance of 1000", async () => {
         mockWalletRepository.createWallet.mockResolvedValue(wallet);
 
-        const result = await service.execute(wallet);
+        const result = await sut.execute(wallet);
 
-        expect(result).toHaveProperty("balance");
-        expect(result).toHaveProperty("playerId");
+        expect(result).toEqual(
+          expect.objectContaining({
+            id: "uuid-super-aleatório",
+            playerId: "player123",
+            balance: 1000n,
+            createdAt: new Date("2026-01-01"),
+            updatedAt: new Date("2024-02-01"),
+            player: { id: "player123", username: "player" },
+            transactions: [],
+          }),
+        );
         expect(result.balance).toBe(1000n);
       });
     });
@@ -85,7 +104,7 @@ describe("CreateWalletService", () => {
           new ConflictException("Wallet already exists"),
         );
 
-        await expect(service.execute(wallet)).rejects.toThrow(
+        await expect(sut.execute(wallet)).rejects.toThrow(
           new ConflictException("Wallet already exists"),
         );
       });
@@ -100,7 +119,7 @@ describe("CreateWalletService", () => {
           new UnauthorizedException("Balance should not be negative"),
         );
 
-        await expect(service.execute(balanceNegative)).rejects.toThrow(
+        await expect(sut.execute(balanceNegative)).rejects.toThrow(
           new UnauthorizedException("Balance should not be negative"),
         );
       });
@@ -115,7 +134,7 @@ describe("CreateWalletService", () => {
           new UnauthorizedException("Balance should not be negative"),
         );
 
-        await expect(service.execute(balanceOverOneThousand)).rejects.toThrow(
+        await expect(sut.execute(balanceOverOneThousand)).rejects.toThrow(
           new UnauthorizedException("Balance should not be negative"),
         );
       });
@@ -130,7 +149,7 @@ describe("CreateWalletService", () => {
           new NotFoundException("User not found"),
         );
 
-        await expect(service.execute(invalidData)).rejects.toThrow(
+        await expect(sut.execute(invalidData)).rejects.toThrow(
           new NotFoundException("User not found"),
         );
       });
