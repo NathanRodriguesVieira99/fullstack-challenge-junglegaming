@@ -1,6 +1,6 @@
 @base_url=http://localhost:4002
-# @keycloak_base_url=http://localhost:8080/realms/crash-game/protocol/openid-connect
-# @access_token={{login.response.body.access_token}}
+@keycloak_base_url=http://localhost:8080/realms/crash-game/protocol/openid-connect
+@access_token={{keycloak_tokens.response.body.access_token}}
 # @refresh_token={{login.response.body.refresh_token}}
 
 ###
@@ -11,31 +11,29 @@ GET {{base_url}}/health
 ###
 
 # @name keycloak_tokens
-# POST {{keycloak_base_url}}/token
-# Content-Type: application/x-www-form-urlencoded
+POST {{keycloak_base_url}}/token
+Content-Type: application/x-www-form-urlencoded
 
-# client_id=crash-game-client
-# &grant_type=password
-# &username=player
-# &password=player123
-# &scope=openid
-
-###
-
-# @name keycloak_userinfo
-# GET {{keycloak_base_url}}/userinfo
-# Authorization: Bearer {{access_token}}
-
-### 
-
-# @name login
-# POST {{base_url}}/auth/login
-# Content-Type: application/json
-
-# {
-#   "username":"player",
-#   "password":"player123"
-# }
+client_id=crash-game-client
+&grant_type=password
+&username=player
+&password=player123
+&scope=openid
 
 ###
 
+# @name create_wallet
+POST {{base_url}}/wallets
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+
+}
+
+###
+
+# @name get_player_wallet
+GET {{base_url}}/wallets/me
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
