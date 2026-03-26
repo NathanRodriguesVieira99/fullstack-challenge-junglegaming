@@ -15,7 +15,7 @@
     "db:migrate:deploy": "prisma migrate deploy",
     "db:generate": "prisma generate",
     "db:studio": "prisma studio",
-    "db:seed": "pnpm prisma db seed"
+    "db:seed": " prisma db seed"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.1",
