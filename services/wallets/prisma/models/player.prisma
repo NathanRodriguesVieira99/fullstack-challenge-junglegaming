@@ -1,11 +1,10 @@
-/* Entidade responsável pelo jogador */
 model Player {
   id        String   @id @default(uuid())
   username  String?
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  /* relacionamento 1:1 */
+  // relacionamento 1:1 
   walletId String @unique @map("wallet_id")
   wallet   Wallet @relation(fields: [walletId], references: [id])
 
