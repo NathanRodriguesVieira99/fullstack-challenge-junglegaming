@@ -1,18 +1,14 @@
 import { Module } from "@nestjs/common";
 
 import { HealthController } from "./controllers/health/health.controller";
-import { getWalletsController } from "./controllers/wallets/get-wallet.controller";
-import { createWalletsController } from "./controllers/wallets/create-wallets.controller";
+import { GetWalletController } from "./controllers/wallets/get-wallet.controller";
+import { CreateWalletController } from "./controllers/wallets/create-wallet.controller";
 
-import { CreateWalletsService } from "@/application/services/wallets/create-wallets.service";
-import { GetWalletsService } from "@/application/services/wallets/get-wallet.service";
+import { CreateWalletService } from "@/application/services/wallets/create-wallets.service";
+import { GetWalletService } from "@/application/services/wallets/get-wallet.service";
 
 @Module({
-  controllers: [
-    HealthController,
-    getWalletsController,
-    createWalletsController,
-  ],
-  providers: [CreateWalletsService, GetWalletsService],
+  controllers: [HealthController, GetWalletController, CreateWalletController],
+  providers: [CreateWalletService, GetWalletService],
 })
 export class httpModule {}
