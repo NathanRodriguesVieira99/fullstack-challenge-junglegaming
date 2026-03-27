@@ -12,12 +12,11 @@ import { TRANSACTION_TYPE } from "../../../../../src/infrastructure/database/gen
 import { Decimal } from "@prisma/client/runtime/client";
 import { UnauthorizedException } from "@nestjs/common";
 
-const { mockTransactionRepository, mockKafkaProducer } = vi.hoisted(() => ({
+import { mockKafkaProducer } from "../../../../__mocks__/kafka.mock";
+
+const { mockTransactionRepository } = vi.hoisted(() => ({
   mockTransactionRepository: {
     debitTransaction: vi.fn<() => Promise<TransactionResponseDto>>(),
-  },
-  mockKafkaProducer: {
-    emit: vi.fn(),
   },
 }));
 
