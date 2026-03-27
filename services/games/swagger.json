@@ -123,16 +123,29 @@
         "properties": {
           "status": {
             "type": "string",
-            "example": 200
+            "description": "Current health status of the service",
+            "example": "ok",
+            "enum": [
+              "ok",
+              "degraded",
+              "unhealthy"
+            ]
           },
           "service": {
             "type": "string",
-            "example": "ok"
+            "description": "Name of the service reporting health status",
+            "example": "games"
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "Timestamp of the health check",
+            "example": "2024-01-15T10:30:00.000Z"
           }
         },
         "required": [
           "status",
-          "service"
+          "service",
+          "timestamp"
         ]
       }
     }

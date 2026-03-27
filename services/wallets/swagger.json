@@ -25,25 +25,25 @@
     },
     "/wallets/me": {
       "get": {
-        "description": "Retorna os dados da carteira do jogador autenticado",
-        "operationId": "GetWallet",
+        "description": "Retrieves the wallet associated with the authenticated player. Returns wallet details including current balance, creation date, and last update timestamp.",
+        "operationId": "getPlayerWallet",
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Carteira retornada com sucesso",
+            "description": "Wallet successfully retrieved",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/createWalletDto"
+                  "$ref": "#/components/schemas/CreateWalletResponseDto"
                 }
               }
             }
           },
           "401": {
-            "description": "Usuário não autorizado (Token JWT inválido ou ausente)"
+            "description": "Unauthorized - Invalid or missing JWT token"
           },
           "404": {
-            "description": "Carteira não encontrada"
+            "description": "Wallet not found for the authenticated player"
           }
         },
         "security": [
@@ -51,7 +51,7 @@
             "bearer": []
           }
         ],
-        "summary": "Obter carteira do jogador",
+        "summary": "Get authenticated player's wallet",
         "tags": [
           "Wallets"
         ]
@@ -59,25 +59,25 @@
     },
     "/wallets": {
       "post": {
-        "description": "Cria uma carteira para o jogador",
-        "operationId": "CreateWallet",
+        "description": "Creates a new wallet for the authenticated player with an initial balance of 1000.00. Each player can only have one wallet.",
+        "operationId": "createWallet",
         "parameters": [],
         "responses": {
           "201": {
-            "description": "Carteira criada com sucesso",
+            "description": "Wallet successfully created with initial balance",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/createWalletDto"
+                  "$ref": "#/components/schemas/CreateWalletResponseDto"
                 }
               }
             }
           },
           "401": {
-            "description": "Usuário não autorizado (Token JWT inválido ou ausente)"
+            "description": "Unauthorized - Invalid or missing JWT token"
           },
           "409": {
-            "description": "Usuário já possui uma carteira"
+            "description": "Conflict - Player already has an existing wallet"
           }
         },
         "security": [
@@ -85,9 +85,23 @@
             "bearer": []
           }
         ],
-        "summary": "Cria uma carteira para usuário autenticado com 1000 de saldo inicial",
+        "summary": "Create a new wallet for the player",
         "tags": [
           "Wallets"
+        ]
+      }
+    },
+    "/wallets/credit": {
+      "post": {
+        "operationId": "CreditController_credit",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Wallets - Credit"
         ]
       }
     }
@@ -107,11 +121,13 @@
         "properties": {
           "status": {
             "type": "string",
-            "example": 200
+            "description": "Current health status of the service",
+            "example": "ok"
           },
           "service": {
             "type": "string",
-            "example": "ok"
+            "description": "Name of the service reporting health status",
+            "example": "wallets"
           }
         },
         "required": [
@@ -119,31 +135,37 @@
           "service"
         ]
       },
-      "Decimal2": {
-        "type": "object",
-        "properties": {}
-      },
-      "createWalletDto": {
+      "CreateWalletResponseDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier of the wallet",
+            "example": "123e4567-e89b-12d3-a456-426614174001",
+            "format": "uuid"
+          },
           "playerId": {
             "type": "string",
-            "example": "sdjkwejjhsdkmskdhjuedfsndjm...",
+            "description": "Unique identifier of the player who owns the wallet",
+            "example": "123e4567-e89b-12d3-a456-426614174000",
             "format": "uuid"
           },
           "balance": {
-            "example": "1000",
-            "description": "Valor monetário em centavos",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Decimal2"
-              }
-            ]
+            "type": "string",
+            "description": "Current wallet balance in decimal format",
+            "example": "1000.00"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Timestamp when the wallet was created",
+            "example": "2024-01-15T10:30:00.000Z"
           }
         },
         "required": [
+          "id",
           "playerId",
-          "balance"
+          "balance",
+          "createdAt"
         ]
       }
     }
