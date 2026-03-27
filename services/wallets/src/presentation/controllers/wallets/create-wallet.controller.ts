@@ -12,9 +12,9 @@ import {
   ApiResponse,
   ApiTags,
 } from "@nestjs/swagger";
-import { JwtGuard } from "@/infrastructure/auth/jwt/jwt.guard";
-import { CreateWalletService } from "@/application/services/wallets/create-wallet.service";
-import { createWalletDto } from "@/presentation/dtos/wallet.dto";
+import { JwtGuard } from "../../../infrastructure/auth/jwt/jwt.guard";
+import { CreateWalletService } from "../../../application/services/wallets/create-wallet.service";
+import { createWalletDto } from "../../../presentation/dtos/wallet.dto";
 
 @ApiTags("Wallets")
 @UseGuards(JwtGuard)

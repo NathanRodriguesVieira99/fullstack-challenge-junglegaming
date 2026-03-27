@@ -1,6 +1,6 @@
-import type { Wallet } from "@models/wallet";
+import type { Wallet } from "../../entities/wallet";
 import type { WalletsRepositoryContract } from "./wallets.repository.contract";
-import { DatabaseService } from "@db/database.service";
+import { DatabaseService } from "../../../infrastructure/database/database.service";
 import { Transaction } from "@models/transaction";
 import {
   ConflictException,
@@ -8,8 +8,8 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from "@nestjs/common";
-import { sanitizeBigInt } from "@utils/sanitize-bigInt";
-import type { createWalletDto } from "@/presentation/dtos/wallet.dto";
+import { sanitizeBigInt } from "../../../utils/sanitize-bigInt";
+import type { createWalletDto } from "../../../presentation/dtos/wallet.dto";
 
 @Injectable()
 export class WalletsRepositoryImplementation implements WalletsRepositoryContract {

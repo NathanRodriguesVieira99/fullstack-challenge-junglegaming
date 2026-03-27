@@ -1,5 +1,5 @@
-import { JwtGuard } from "@/infrastructure/auth/jwt/jwt.guard";
-import { createWalletDto } from "@/presentation/dtos/wallet.dto";
+import { JwtGuard } from "../../../infrastructure/auth/jwt/jwt.guard";
+import { createWalletDto } from "../../dtos/wallet.dto";
 import {
   Controller,
   Get,
@@ -14,7 +14,7 @@ import {
   ApiResponse,
   ApiTags,
 } from "@nestjs/swagger";
-import { GetWalletService } from "@services/wallets/get-wallet.service";
+import { GetWalletService } from "../../../application/services/wallets/get-wallet.service";
 
 @ApiTags("Wallets")
 @Controller("wallets")

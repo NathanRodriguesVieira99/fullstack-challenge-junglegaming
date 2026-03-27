@@ -2,7 +2,7 @@ import { Global, Module } from "@nestjs/common";
 import { HttpModule } from "@nestjs/axios";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
-import { env } from "@/_config";
+import { env } from "../../_config/env";
 import { JwtStrategyService } from "./jwt/jwt-strategy.service";
 
 @Global()
