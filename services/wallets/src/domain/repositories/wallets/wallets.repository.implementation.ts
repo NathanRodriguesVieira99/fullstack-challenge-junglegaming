@@ -24,7 +24,6 @@ export class WalletsRepositoryImplementation implements WalletsRepositoryContrac
       });
 
       if (playerExists) throw new ConflictException("Wallet already exists");
-      if (!playerExists) throw new NotFoundException("User not found");
 
       const verifyBalance = () => {
         if (balance < 1n)
