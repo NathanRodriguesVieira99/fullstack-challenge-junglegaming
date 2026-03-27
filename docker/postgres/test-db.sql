@@ -1,0 +1,2 @@
+CREATE IF NOT EXISTS DATABASE wallets_test;
+
