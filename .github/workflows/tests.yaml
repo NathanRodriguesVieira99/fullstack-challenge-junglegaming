@@ -24,7 +24,7 @@ jobs:
           POSTGRES_USER: admin
           POSTGRES_PASSWORD: admin
           POSTGRES_DB: postgres
-          POSTGRES_EXTRA_DATABASES: games,wallets,admin,wallets_test,games_test
+          POSTGRES_EXTRA_DATABASES: games,wallets,admin
 
     steps:
       # faz o checkout do código
@@ -39,6 +39,17 @@ jobs:
       - name: Copy .env (Games)
         run: cp .env.example .env || cp .env .env
         working-directory: services/games
+
+      # cria o banco wallets_test
+      - name: Create wallets_test database
+        run: |
+          export PGPASSWORD=admin
+          until psql -h localhost -U admin -d postgres -c "SELECT 1" > /dev/null 2>&1; do
+            echo "Waiting for postgres..."
+            sleep 1
+          done
+          psql -h localhost -U admin -d postgres -c "CREATE DATABASE wallets_test;"
+        working-directory: services/wallets
 
       # gera o cliente do Prisma ORM
       - name: Generate Prisma Client (Games)
