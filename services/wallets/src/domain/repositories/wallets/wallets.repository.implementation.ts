@@ -8,8 +8,9 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from "@nestjs/common";
-import { sanitizeBigInt } from "../../../utils/sanitize-bigInt";
+
 import type { createWalletDto } from "../../../presentation/dtos/wallet.dto";
+import { Decimal } from "@prisma/client/runtime/client";
 
 @Injectable()
 export class WalletsRepositoryImplementation implements WalletsRepositoryContract {
@@ -25,21 +26,18 @@ export class WalletsRepositoryImplementation implements WalletsRepositoryContrac
 
       if (playerExists) throw new ConflictException("Wallet already exists");
 
-      const verifyBalance = () => {
-        if (balance < 1n)
-          throw new UnauthorizedException("Balance should not be negative");
+      const isDecimalBalance = new Decimal(balance);
 
-        if (balance > 1000n)
-          throw new UnauthorizedException("Balance should not be over 1000");
+      if (isDecimalBalance.lt(1000))
+        throw new UnauthorizedException("Balance should not be negative");
 
-        return;
-      };
-      verifyBalance();
+      if (isDecimalBalance.gt(1000))
+        throw new UnauthorizedException("Balance should not be over 1000");
 
       const wallet = await this.db.wallet.create({
         data: {
           playerId: playerId,
-          balance: balance,
+          balance: isDecimalBalance,
         },
         include: {
           player: true,
@@ -49,7 +47,7 @@ export class WalletsRepositoryImplementation implements WalletsRepositoryContrac
 
       return wallet;
     });
-    return sanitizeBigInt(result);
+    return result;
   }
 
   async getWalletByPlayerId(playerId: string): Promise<Wallet> {
@@ -67,10 +65,8 @@ export class WalletsRepositoryImplementation implements WalletsRepositoryContrac
       return wallet;
     });
 
-    return sanitizeBigInt(result);
+    return result;
   }
-
-  // async getByPlayerId(playerId: string): Promise<Wallet | null> {}
 
   // async creditTransaction(
   //   id: string,
