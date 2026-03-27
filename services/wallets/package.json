@@ -15,7 +15,7 @@
     "db:migrate:deploy": "prisma migrate deploy",
     "db:generate": "prisma generate",
     "db:studio": "prisma studio",
-    "db:seed": " prisma db seed"
+    "db:seed": " NODE_ENV=development DATABASE_URL=\"postgresql://admin:admin@localhost:5432/wallets\" prisma db seed"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.1",
@@ -41,6 +41,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.4.0",
     "@nestjs/swagger": "^11.2.6",
     "@types/passport-jwt": "^4.0.1",
     "@types/pg": "^8.20.0",
