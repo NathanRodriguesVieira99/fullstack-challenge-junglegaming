@@ -26,24 +26,7 @@ jobs:
           POSTGRES_DB: postgres
           POSTGRES_EXTRA_DATABASES: games,wallets,admin
 
-      # Sobe o keycloak
-      keycloak:
-        image: quay.io/keycloak/keycloak:26.5.5
-        ports:
-          - "8080:8080"
-        env:
-          KC_BOOTSTRAP_ADMIN_USERNAME: admin
-          KC_BOOTSTRAP_ADMIN_PASSWORD: admin
-          KC_HEALTH_ENABLED: "true"
-        volumes:
-          - ./docker/keycloak:/opt/keycloak/data/import:ro
-
     steps:
-      # limpa o keycloak 
-      - name: Cleanup Keycloak import dir (if exists)
-        run: |
-          sudo rm -rf ./docker/keycloak || true
-
       # faz o checkout do código
       - name: Checkout code
         uses: actions/checkout@v4
