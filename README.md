@@ -113,7 +113,7 @@ cd frontend && bun test
 ## Decisões de Arquitetura & Trade-offs
 
 - **Mensageria**: Kafka escolhido pela robustez e integração pronta no NestJS.
-- **Precisão monetária**: Todos os valores em centavos (inteiros/BigInt) — nunca ponto flutuante.
+- **Precisão monetária**: Todos os valores em centavos (Decimal) — nunca ponto flutuante.
 - **DDD**: Separação clara de camadas e bounded contexts.
 - **Infra**: Tudo automatizado via Docker Compose, sem dependências manuais.
 - **Frontend**: Vite + React para maior controle e performance.
