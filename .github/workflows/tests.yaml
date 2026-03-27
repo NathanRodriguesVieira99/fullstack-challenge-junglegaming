@@ -2,7 +2,7 @@ name:
   Push to main CI pipeline
 
   ### !! FIX [] => receber variáveis de ambiente no service do postgres via secrets e criar ambiente isolado para testes
-  
+
   ### !! FIX [] => ao invés de copiar o .env.example com as variáveis exatas do .env, talvez usar secrets ou alguma outra forma de ocultar essas variáveis
 
 on:
@@ -24,7 +24,7 @@ jobs:
           POSTGRES_USER: admin
           POSTGRES_PASSWORD: admin
           POSTGRES_DB: postgres
-          POSTGRES_EXTRA_DATABASES: games,wallets,admin
+          POSTGRES_EXTRA_DATABASES: games,wallets,admin,wallets_test,games_test
 
     steps:
       # faz o checkout do código
