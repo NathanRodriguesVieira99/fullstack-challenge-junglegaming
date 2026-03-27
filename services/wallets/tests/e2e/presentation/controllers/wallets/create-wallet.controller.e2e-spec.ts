@@ -9,8 +9,6 @@ import request from "supertest";
 import { AppModule } from "../../../../../src/app.module";
 import { DatabaseService } from "../../../../../src/infrastructure/database/database.service";
 
-// !! FIX [] => Corrigir testes que estão com .skip
-
 describe("CreateWalletController E2E", () => {
   let app: INestApplication;
   let accessToken: string;
@@ -26,6 +24,8 @@ describe("CreateWalletController E2E", () => {
 
     await app.init();
   });
+
+  beforeEach(async () => await db.wallet.deleteMany());
 
   beforeEach(async () => {
     const tokenResponse = await request(KEYCLOAK_URL)
@@ -44,8 +44,8 @@ describe("CreateWalletController E2E", () => {
 
   describe("POST /wallets", () => {
     describe("Happy Path", () => {
-      it.skip("should create wallet with default balance when valid token provided", async () => {
-        const response = await request(app.getHttpServer)
+      it("should create wallet with default balance when valid token provided", async () => {
+        const response = await request(app.getHttpServer())
           .post("/wallets")
           .set("Authorization", `Bearer ${accessToken}`);
 
@@ -58,25 +58,25 @@ describe("CreateWalletController E2E", () => {
     });
 
     describe("Errors", () => {
-      it.skip("should return 401 when no token provided", async () => {
-        const response = await request(app.getHttpServer).post("/wallets");
+      it("should return 401 when no token provided", async () => {
+        const response = await request(app.getHttpServer()).post("/wallets");
         expect(response.status).toBe(401);
       });
 
-      it.skip("should return 401 when token is invalid", async () => {
-        const response = await request(app.getHttpServer)
+      it("should return 401 when token is invalid", async () => {
+        const response = await request(app.getHttpServer())
           .post("/wallets")
           .set("Authorization", "Bearer invalid-token");
 
         expect(response.status).toBe(401);
       });
 
-      it.skip("should return 409 when wallet already exists", async () => {
-        await request(app.getHttpServer)
+      it("should return 409 when wallet already exists", async () => {
+        await request(app.getHttpServer())
           .post("/wallets")
           .set("Authorization", `Bearer ${accessToken}`);
 
-        const response = await request(app.getHttpServer)
+        const response = await request(app.getHttpServer())
           .post("/wallets")
           .set("Authorization", `Bearer ${accessToken}`);
 
