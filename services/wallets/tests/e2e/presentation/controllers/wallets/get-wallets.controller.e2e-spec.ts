@@ -1,19 +1,86 @@
-import { describe, beforeEach, it, expect } from "vitest";
-import { Test, TestingModule } from "@nestjs/testing";
-import { GetWalletController } from "../../../../../src/presentation/controllers/wallets/get-wallet.controller";
+import { Test } from "@nestjs/testing";
+import type { INestApplication } from "@nestjs/common";
 
-describe("GetWalletsController", () => {
-  let controller: GetWalletController;
+import { describe, it, expect, afterAll, beforeAll } from "vitest";
+import { CLIENT_ID, KEYCLOAK_URL, REALM } from "../../../shared/constants";
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [GetWalletController],
+import request from "supertest";
+
+import { AppModule } from "../../../../../src/app.module";
+import { DatabaseService } from "../../../../../src/infrastructure/database/database.service";
+
+describe("[E2E] GetWallet Controller ", () => {
+  let app: INestApplication;
+  let accessToken: string;
+  let db: DatabaseService;
+
+  beforeAll(async () => {
+    const moduleRef = await Test.createTestingModule({
+      imports: [AppModule],
     }).compile();
 
-    controller = module.get<GetWalletController>(GetWalletController);
+    app = moduleRef.createNestApplication();
+    db = moduleRef.get<DatabaseService>(DatabaseService);
+
+    await app.init();
   });
 
-  it("should be defined", () => {
-    expect(controller).toBeDefined();
+  beforeEach(async () => {
+    const tokenResponse = await request(KEYCLOAK_URL)
+      .post(`/realms/${REALM}/protocol/openid-connect/token`)
+      .set("Content-Type", "application/x-www-form-urlencoded")
+      .send(
+        `grant_type=password&client_id=${CLIENT_ID}&username=player&password=player123&scope=openid`,
+      );
+
+    accessToken = tokenResponse.body.access_token;
+
+    await request(app.getHttpServer())
+      .post("/wallets")
+      .set("Authorization", `Bearer ${accessToken}`);
+  });
+
+  afterAll(async () => {
+    await db.$disconnect();
+    await app.close();
+  });
+
+  describe("GET /wallets/me", () => {
+    describe("Happy-Paths", () => {
+      it("should return wallet when authenticated and wallet exists", async () => {
+        const response = await request(app.getHttpServer())
+          .get("/wallets/me")
+          .set("Authorization", `Bearer ${accessToken}`);
+
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty("id");
+        expect(response.body).toHaveProperty("playerId");
+        expect(response.body).toHaveProperty("balance");
+      });
+
+      it("should return wallet with sanitized bigint balance as string", async () => {
+        const response = await request(app.getHttpServer())
+          .get("/wallets/me")
+          .set("Authorization", `Bearer ${accessToken}`);
+
+        expect(response.status).toBe(200);
+        expect(typeof response.body.balance).toBe("string");
+      });
+    });
+
+    describe("Errors", () => {
+      it("should return 401 when no token provided", async () => {
+        const response = await request(app.getHttpServer()).get("/wallets/me");
+        expect(response.status).toBe(401);
+      });
+
+      it("should return 401 when token is invalid", async () => {
+        const response = await request(app.getHttpServer())
+          .get("/wallets/me")
+          .set("Authorization", "Bearer invalid-token");
+
+        expect(response.status).toBe(401);
+      });
+    });
   });
 });
