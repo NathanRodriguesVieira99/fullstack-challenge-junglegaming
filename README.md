@@ -21,23 +21,23 @@
 
 | Método | Endpoint | Auth | Descrição | Status |
 
-| Método | Endpoint | Auth | Descrição | Status |
-| ------ | ------------------------------- | ---- | ------------------------------------------ | ------- |
-| `POST` | `/wallets` | Sim | Cria carteira para o jogador autenticado | ⌛ Fazendo... |
-| `GET` | `/wallets/me` | Sim | Retorna carteira e saldo do jogador | ⌛ Fazendo... |
+| Método | Endpoint      | Auth | Descrição                                | Status           |
+| ------ | ------------- | ---- | ---------------------------------------- | ---------------- |
+| `POST` | `/wallets`    | Sim  | Cria carteira para o jogador autenticado | ✔️ Implementado! |
+| `GET`  | `/wallets/me` | Sim  | Retorna carteira e saldo do jogador      | ✔️ Implementado! |
 
 > Crédito e débito **não** são expostos via REST — acontecem via message broker.
 
 ### Game Service — `/games`
 
-| Método | Endpoint                        | Auth | Descrição                                  | Status |
-| ------ | ------------------------------- | ---- | ------------------------------------------ | ------ |
-| `GET`  | `/games/rounds/current`         | Não  | Estado da rodada atual com apostas         |   ⌛ Fazendo..|
-| `GET`  | `/games/rounds/history`         | Não  | Histórico paginado de rodadas              |   ⌛ Fazendo..|
-| `GET`  | `/games/rounds/:roundId/verify` | Não  | Dados de verificação provably fair         |   ⌛ Fazendo..|
-| `GET`  | `/games/bets/me`                | Sim  | Histórico de apostas do jogador (paginado) |   ⌛ Fazendo..|
-| `POST` | `/games/bet`                    | Sim  | Fazer aposta na rodada atual               |   ⌛ Fazendo..|
-| `POST` | `/games/bet/cashout`            | Sim  | Sacar no multiplicador atual               |   ⌛ Fazendo..|
+| Método | Endpoint                        | Auth | Descrição                                  | Status       |
+| ------ | ------------------------------- | ---- | ------------------------------------------ | ------------ |
+| `GET`  | `/games/rounds/current`         | Não  | Estado da rodada atual com apostas         | ⌛ Fazendo.. |
+| `GET`  | `/games/rounds/history`         | Não  | Histórico paginado de rodadas              | ⌛ Fazendo.. |
+| `GET`  | `/games/rounds/:roundId/verify` | Não  | Dados de verificação provably fair         | ⌛ Fazendo.. |
+| `GET`  | `/games/bets/me`                | Sim  | Histórico de apostas do jogador (paginado) | ⌛ Fazendo.. |
+| `POST` | `/games/bet`                    | Sim  | Fazer aposta na rodada atual               | ⌛ Fazendo.. |
+| `POST` | `/games/bet/cashout`            | Sim  | Sacar no multiplicador atual               | ⌛ Fazendo.. |
 
 ## Arquitetura & Decisões
 
