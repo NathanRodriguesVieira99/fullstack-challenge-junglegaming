@@ -8,6 +8,9 @@ interface Payload {
   preferred_username: string;
 }
 
+const KEYCLOAK_URL =
+  process.env.KEYCLOAK_URL || "http://host.docker.internal:8080";
+
 @Injectable()
 export class JwtStrategyService extends PassportStrategy(Strategy, "jwt") {
   constructor() {
@@ -16,8 +19,7 @@ export class JwtStrategyService extends PassportStrategy(Strategy, "jwt") {
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri:
-          "http://host.docker.internal:8080/realms/crash-game/protocol/openid-connect/certs",
+        jwksUri: `${KEYCLOAK_URL}/realms/crash-game/protocol/openid-connect/certs`,
       }),
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       algorithms: ["RS256"],
