@@ -1,9 +1,9 @@
 name:
   Push to main CI pipeline
 
-  ### !! FIX [] => receber variáveis de ambiente no service do postgres via secrets e criar ambiente isolado para testes
+  ### !! FIX  => receber variáveis de ambiente no service do postgres via secrets e criar ambiente isolado para testes
 
-  ### !! FIX [] => ao invés de copiar o .env.example com as variáveis exatas do .env, talvez usar secrets ou alguma outra forma de ocultar essas variáveis
+  ### !! FIX  => ao invés de copiar o .env.example com as variáveis exatas do .env, talvez usar secrets ou alguma outra forma de ocultar essas variáveis
 
 on:
   push:
@@ -55,6 +55,12 @@ jobs:
       - name: Generate Prisma Client (Games)
         working-directory: services/games
         run: bun db:generate
+
+      # aplica as migrations no banco wallets_test
+      - name: Run Prisma Migrate Deploy (Wallets)
+        working-directory: services/wallets
+        run: |
+          NODE_ENV=test DATABASE_URL="postgresql://admin:admin@localhost:5432/wallets_test" bun db:migrate:deploy
 
         # roda testes unitários do serviço games
       - name: Run Game Service Unit Tests
