@@ -1,6 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { ConflictException, UnauthorizedException } from "@nestjs/common";
 import { describe, beforeEach, it, expect, vi } from "vitest";
+import { Decimal } from "@prisma/client/runtime/client";
 
 import { CreateWalletService } from "../../../../../src/application/services/wallets/create-wallet.service";
 
@@ -20,7 +21,7 @@ const { mockWalletRepository, mockKafkaProducer } = vi.hoisted(() => ({
 const wallet = {
   id: "uuid-super-aleatório",
   playerId: "player123",
-  balance: 1000n,
+  balance: new Decimal(1000),
   createdAt: new Date("2026-01-01"),
   updatedAt: new Date("2024-02-01"),
   player: { id: "player123", username: "player" },
@@ -79,14 +80,14 @@ describe("CreateWalletService", () => {
           expect.objectContaining({
             id: "uuid-super-aleatório",
             playerId: "player123",
-            balance: 1000n,
+            balance: new Decimal(1000),
             createdAt: new Date("2026-01-01"),
             updatedAt: new Date("2024-02-01"),
             player: { id: "player123", username: "player" },
             transactions: [],
           }),
         );
-        expect(result.balance).toBe(1000n);
+        expect(result.balance.eq(new Decimal(1000))).toBe(true);
       });
     });
 
@@ -107,7 +108,7 @@ describe("CreateWalletService", () => {
 
       it("should throw Unauthorized Exception when balance is < 1 ", async () => {
         const balanceNegative = {
-          balance: 0n,
+          balance: new Decimal(0),
           playerId: "player123",
         };
 
@@ -122,16 +123,16 @@ describe("CreateWalletService", () => {
 
       it("should throw Unauthorized Exception when balance is > 1000 ", async () => {
         const balanceOverOneThousand = {
-          balance: 1001n,
+          balance: new Decimal(1001),
           playerId: "player123",
         };
 
         mockWalletRepository.createWallet.mockRejectedValueOnce(
-          new UnauthorizedException("Balance should not be negative"),
+          new UnauthorizedException("Balance should not be over 1000"),
         );
 
         await expect(sut.execute(balanceOverOneThousand)).rejects.toThrow(
-          new UnauthorizedException("Balance should not be negative"),
+          new UnauthorizedException("Balance should not be over 1000"),
         );
       });
     });
