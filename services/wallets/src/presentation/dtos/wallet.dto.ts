@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Decimal } from "@prisma/client/runtime/client";
 import { IsNotEmpty, IsString, IsUUID } from "class-validator";
 
 export class createWalletDto {
@@ -14,9 +15,9 @@ export class createWalletDto {
 
   @ApiProperty({
     example: "1000",
-    type: BigInt,
-    description: "é BigInt porém vira string após ser sanitizado",
+    type: Decimal,
+    description: "Valor monetário em centavos",
   })
   @IsNotEmpty()
-  balance: bigint;
+  balance: Decimal;
 }
