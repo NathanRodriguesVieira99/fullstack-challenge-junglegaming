@@ -8,13 +8,18 @@ import {
 } from "@nestjs/common";
 import {
   ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiConflictResponse,
   ApiOperation,
-  ApiResponse,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from "@nestjs/swagger";
+import { Decimal } from "@prisma/client/runtime/client";
 import { JwtGuard } from "../../../infrastructure/auth/jwt/jwt.guard";
+import { CreateWalletResponseDto } from "../../../presentation/dtos/wallet.dto";
 import { CreateWalletService } from "../../../application/services/wallets/create-wallet.service";
-import { createWalletDto } from "../../../presentation/dtos/wallet.dto";
+
+import type { Request } from "express";
 
 @ApiTags("Wallets")
 @UseGuards(JwtGuard)
@@ -26,26 +31,23 @@ export class CreateWalletController {
   @HttpCode(HttpStatus.CREATED)
   @ApiBearerAuth()
   @ApiOperation({
-    operationId: "CreateWallet",
-    description: "Cria uma carteira para o jogador",
-    summary:
-      "Cria uma carteira para usuário autenticado com 1000 de saldo inicial",
+    operationId: "createWallet",
+    summary: "Create a new wallet for the player",
+    description:
+      "Creates a new wallet for the authenticated player with an initial balance of 1000.00. Each player can only have one wallet.",
   })
-  @ApiResponse({
-    status: HttpStatus.CREATED,
-    description: "Carteira criada com sucesso",
-    type: createWalletDto,
+  @ApiCreatedResponse({
+    description: "Wallet successfully created with initial balance",
+    type: CreateWalletResponseDto,
   })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: "Usuário não autorizado (Token JWT inválido ou ausente)",
+  @ApiUnauthorizedResponse({
+    description: "Unauthorized - Invalid or missing JWT token",
   })
-  @ApiResponse({
-    status: HttpStatus.CONFLICT,
-    description: "Usuário já possui uma carteira",
+  @ApiConflictResponse({
+    description: "Conflict - Player already has an existing wallet",
   })
   create(@Req() req: { user: { userId: string } }) {
     const playerId = req.user.userId;
-    return this.service.execute({ playerId, balance: 1000n });
+    return this.service.execute({ playerId, balance: new Decimal(1000) });
   }
 }
