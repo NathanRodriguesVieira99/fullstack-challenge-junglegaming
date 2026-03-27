@@ -13,7 +13,7 @@ model Transaction {
   id        String             @id @default(uuid())
   type      TRANSACTION_TYPE
   status    TRANSACTION_STATUS @default(PENDING)
-  amount    BigInt
+  amount    Decimal
   createdAt DateTime           @default(now()) @map("created_at")
 
   // relacionamento 1:N
