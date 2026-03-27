@@ -119,6 +119,10 @@
           "service"
         ]
       },
+      "Decimal2": {
+        "type": "object",
+        "properties": {}
+      },
       "createWalletDto": {
         "type": "object",
         "properties": {
@@ -128,10 +132,13 @@
             "format": "uuid"
           },
           "balance": {
-            "format": "int64",
-            "type": "integer",
             "example": "1000",
-            "description": "é BigInt porém vira string após ser sanitizado"
+            "description": "Valor monetário em centavos",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Decimal2"
+              }
+            ]
           }
         },
         "required": [
