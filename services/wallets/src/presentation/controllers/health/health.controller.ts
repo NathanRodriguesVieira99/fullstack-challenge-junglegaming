@@ -10,6 +10,9 @@ export class HealthController {
   @ApiResponse({ type: HealthCheckResponseDto, status: 200 })
   @Get("health")
   check(): HealthCheckResponseDto {
-    return { status: "ok", service: "wallets" };
+    return {
+      status: "ok",
+      service: "wallets",
+    };
   }
 }
