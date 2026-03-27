@@ -1,5 +1,3 @@
-import { JwtGuard } from "../../../infrastructure/auth/jwt/jwt.guard";
-import { createWalletDto } from "../../dtos/wallet.dto";
 import {
   Controller,
   Get,
@@ -14,7 +12,11 @@ import {
   ApiResponse,
   ApiTags,
 } from "@nestjs/swagger";
+import { JwtGuard } from "../../../infrastructure/auth/jwt/jwt.guard";
 import { GetWalletService } from "../../../application/services/wallets/get-wallet.service";
+import { CreateWalletResponseDto } from "../../dtos/wallet.dto";
+
+import type { Request } from "express";
 
 @ApiTags("Wallets")
 @Controller("wallets")
@@ -26,22 +28,23 @@ export class GetWalletController {
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
   @ApiOperation({
-    operationId: "GetWallet",
-    summary: "Obter carteira do jogador",
-    description: "Retorna os dados da carteira do jogador autenticado",
+    operationId: "getPlayerWallet",
+    summary: "Get authenticated player's wallet",
+    description:
+      "Retrieves the wallet associated with the authenticated player. Returns wallet details including current balance, creation date, and last update timestamp.",
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: "Carteira retornada com sucesso",
-    type: createWalletDto,
+    description: "Wallet successfully retrieved",
+    type: CreateWalletResponseDto,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
-    description: "Usuário não autorizado (Token JWT inválido ou ausente)",
+    description: "Unauthorized - Invalid or missing JWT token",
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: "Carteira não encontrada",
+    description: "Wallet not found for the authenticated player",
   })
   get(@Req() req: { user: { userId: string } }) {
     const playerId = req.user.userId;
