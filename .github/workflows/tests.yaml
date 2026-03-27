@@ -39,6 +39,11 @@ jobs:
           - ./docker/keycloak:/opt/keycloak/data/import:ro
 
     steps:
+      # limpa o keycloak 
+      - name: Cleanup Keycloak import dir (if exists)
+        run: |
+          sudo rm -rf ./docker/keycloak || true
+
       # faz o checkout do código
       - name: Checkout code
         uses: actions/checkout@v4
