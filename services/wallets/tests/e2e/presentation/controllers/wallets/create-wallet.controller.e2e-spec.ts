@@ -8,6 +8,7 @@ import request from "supertest";
 
 import { AppModule } from "../../../../../src/app.module";
 import { DatabaseService } from "../../../../../src/infrastructure/database/database.service";
+import { mockKafkaProducer } from "../../../../__mocks__/kafka.mock";
 
 describe("CreateWalletController E2E", () => {
   let app: INestApplication;
@@ -17,7 +18,10 @@ describe("CreateWalletController E2E", () => {
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideProvider("wallets-producer")
+      .useValue(mockKafkaProducer)
+      .compile();
 
     app = moduleRef.createNestApplication();
     db = moduleRef.get<DatabaseService>(DatabaseService);
@@ -25,9 +29,9 @@ describe("CreateWalletController E2E", () => {
     await app.init();
   });
 
-  beforeEach(async () => await db.wallet.deleteMany());
-
   beforeEach(async () => {
+    await db.wallet.deleteMany();
+    
     const tokenResponse = await request(KEYCLOAK_URL)
       .post(`/realms/${REALM}/protocol/openid-connect/token`)
       .set("Content-Type", "application/x-www-form-urlencoded")

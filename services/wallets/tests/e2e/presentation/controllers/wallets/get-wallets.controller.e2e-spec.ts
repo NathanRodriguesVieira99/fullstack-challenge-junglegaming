@@ -8,6 +8,7 @@ import request from "supertest";
 
 import { AppModule } from "../../../../../src/app.module";
 import { DatabaseService } from "../../../../../src/infrastructure/database/database.service";
+import { mockKafkaProducer } from "../../../../__mocks__/kafka.mock";
 
 describe("[E2E] GetWallet Controller ", () => {
   let app: INestApplication;
@@ -17,7 +18,10 @@ describe("[E2E] GetWallet Controller ", () => {
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideProvider("wallets-producer")
+      .useValue(mockKafkaProducer)
+      .compile();
 
     app = moduleRef.createNestApplication();
     db = moduleRef.get<DatabaseService>(DatabaseService);
