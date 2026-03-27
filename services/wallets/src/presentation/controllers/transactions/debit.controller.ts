@@ -7,7 +7,6 @@ import type {
   TransactionRequestDto,
   TransactionResponseDto,
 } from "../../dtos/transaction.dto";
-import { JwtGuard } from "@/infrastructure/auth/jwt/jwt.guard";
 
 @ApiTags("Wallets - Transaction Processing (Kafka)")
 @Controller("debit")
@@ -25,13 +24,5 @@ export class DebitController {
     @Payload() payload: TransactionRequestDto,
   ): Promise<TransactionResponseDto> {
     return this.service.execute(payload);
-  }
-
-  @Post()
-  @UseGuards(JwtGuard)
-  async test(
-    @Body() body: TransactionRequestDto,
-  ): Promise<TransactionResponseDto> {
-    return this.service.execute(body);
   }
 }
