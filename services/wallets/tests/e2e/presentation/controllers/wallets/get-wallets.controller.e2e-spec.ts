@@ -41,7 +41,6 @@ describe("[E2E] GetWallet Controller ", () => {
   });
 
   afterAll(async () => {
-    await db.$disconnect();
     await app.close();
   });
 
