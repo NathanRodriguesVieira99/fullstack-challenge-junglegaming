@@ -10,11 +10,11 @@ enum TRANSACTION_STATUS {
 }
 
 model Transaction {
-  id        String             @id @default(uuid())
-  type      TRANSACTION_TYPE
-  status    TRANSACTION_STATUS @default(PENDING)
-  amount    Decimal
-  createdAt DateTime           @default(now()) @map("created_at")
+  id               String             @id @default(uuid())
+  type             TRANSACTION_TYPE
+  status           TRANSACTION_STATUS @default(PENDING)
+  transactionValue Decimal            @map("transaction_value")
+  createdAt        DateTime           @default(now()) @map("created_at")
 
   // relacionamento 1:N
   walletId String @map("wallet_id")
