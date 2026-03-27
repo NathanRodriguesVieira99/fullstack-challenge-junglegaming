@@ -1,9 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import {
-  ConflictException,
-  NotFoundException,
-  UnauthorizedException,
-} from "@nestjs/common";
+import { ConflictException, UnauthorizedException } from "@nestjs/common";
 import { describe, beforeEach, it, expect, vi } from "vitest";
 
 import { CreateWalletService } from "../../../../../src/application/services/wallets/create-wallet.service";
