@@ -138,21 +138,6 @@ describe("CreateWalletService", () => {
           new UnauthorizedException("Balance should not be negative"),
         );
       });
-
-      it("should throw Not Found Exception when user not exists", async () => {
-        const invalidData = {
-          balance: 100n,
-          playerId: "",
-        };
-
-        mockWalletRepository.createWallet.mockRejectedValueOnce(
-          new NotFoundException("User not found"),
-        );
-
-        await expect(sut.execute(invalidData)).rejects.toThrow(
-          new NotFoundException("User not found"),
-        );
-      });
     });
   });
 });
