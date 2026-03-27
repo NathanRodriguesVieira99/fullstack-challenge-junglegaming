@@ -3,9 +3,9 @@ import { TransactionRepositoryContract } from "../../../domain/repositories/tran
 
 import type { ClientKafka } from "@nestjs/microservices";
 import type {
-  TransactionRequestDto,
-  TransactionResponseDto,
-} from "../../../presentation/dtos/transaction.dto";
+  DebitRequestDto,
+  DebitResponseDto,
+} from "../../../presentation/dtos/debit.dto";
 
 @Injectable()
 export class DebitService {
@@ -19,7 +19,7 @@ export class DebitService {
     transactionId,
     playerId,
     transactionValue,
-  }: TransactionRequestDto): Promise<TransactionResponseDto> {
+  }: DebitRequestDto): Promise<DebitResponseDto> {
     const amount = transactionValue;
 
     const transaction = await this.repo.debitTransaction({
