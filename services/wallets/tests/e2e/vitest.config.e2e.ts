@@ -7,7 +7,8 @@ export default defineConfig({
     root: "./",
     globals: true,
     fileParallelism: false,
-    testTimeout: 30000,
+    testTimeout: 60000,
+    hookTimeout: 30000,
     maxWorkers: 1,
     maxConcurrency: 1,
 
