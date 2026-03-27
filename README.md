@@ -123,12 +123,12 @@ cd frontend && bun test
 ## Funcionalidades Implementadas
 
 - [ ] Ciclo completo do Crash Game (aposta, cashout, crash, histórico)
-- [ ] Comunicação assíncrona entre serviços
+- [x] Comunicação assíncrona entre serviços
 - [ ] WebSocket para eventos em tempo real
-- [ ] Autenticação OIDC (Keycloak)
+- [x] Autenticação OIDC (Keycloak)
 - [ ] Testes unitários e E2E
 - [ ] UI responsiva, dark mode, animações
-- [ ] Setup automatizado
+- [x] Setup automatizado
 
 ---
 
