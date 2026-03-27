@@ -1,13 +1,14 @@
 import type { Decimal } from "@prisma/client/runtime/client";
-
-export type TRANSACTION_TYPE = "CREDIT" | "DEBIT";
-export type TRANSACTION_STATUS = "PENDING" | "CONFIRMED" | "FAILED";
+import {
+  TRANSACTION_STATUS,
+  TRANSACTION_TYPE,
+} from "@/infrastructure/database/generated/enums";
 
 interface TransactionProps {
   id: string;
   type: TRANSACTION_TYPE;
   status: TRANSACTION_STATUS;
-  amount: Decimal;
+  transactionValue: Decimal;
   createdAt: Date;
   walletId?: string | null;
 }
@@ -16,7 +17,7 @@ export class Transaction implements TransactionProps {
   id: string;
   type: TRANSACTION_TYPE;
   status: TRANSACTION_STATUS;
-  amount: Decimal;
+  transactionValue: Decimal;
   createdAt: Date;
   walletId?: string | null;
 }
