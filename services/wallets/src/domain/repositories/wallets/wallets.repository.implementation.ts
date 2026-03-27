@@ -1,7 +1,5 @@
-import type { Wallet } from "../../entities/wallet";
-import type { WalletsRepositoryContract } from "./wallets.repository.contract";
+import { Decimal } from "@prisma/client/runtime/client";
 import { DatabaseService } from "../../../infrastructure/database/database.service";
-import { Transaction } from "@models/transaction";
 import {
   ConflictException,
   Injectable,
@@ -9,14 +7,21 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 
-import type { createWalletDto } from "../../../presentation/dtos/wallet.dto";
-import { Decimal } from "@prisma/client/runtime/client";
+import type { WalletsRepositoryContract } from "./wallets.repository.contract";
+import type { Wallet } from "../../entities/wallet";
+import type {
+  CreateWalletRequestDto,
+  CreateWalletResponseDto,
+} from "../../../presentation/dtos/wallet.dto";
 
 @Injectable()
 export class WalletsRepositoryImplementation implements WalletsRepositoryContract {
   constructor(private readonly db: DatabaseService) {}
 
-  async createWallet({ playerId, balance }: createWalletDto): Promise<Wallet> {
+  async createWallet({
+    playerId,
+    balance,
+  }: CreateWalletRequestDto): Promise<CreateWalletResponseDto> {
     const result = await this.db.$transaction(async () => {
       const playerExists = await this.db.wallet.findFirst({
         where: {
@@ -67,16 +72,4 @@ export class WalletsRepositoryImplementation implements WalletsRepositoryContrac
 
     return result;
   }
-
-  // async creditTransaction(
-  //   id: string,
-  //   walletId: string,
-  //   amount: bigint,
-  // ): Promise<Transaction> {}
-
-  // async debitTransaction(
-  //   transactionId: string,
-  //   walletId: string,
-  //   amount: bigint,
-  // ): Promise<Transaction> {}
 }
