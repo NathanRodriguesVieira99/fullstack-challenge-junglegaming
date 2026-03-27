@@ -37,3 +37,18 @@ Authorization: Bearer {{access_token}}
 GET {{base_url}}/wallets/me
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
+
+###
+ 
+ ### copiar os IDs das requisições anteriores ou do db
+ # @name debit_transaction
+# POST {{base_url}}/debit
+# Content-Type: application/json
+# Authorization: Bearer {{access_token}}
+
+
+# {
+#   "walletId": "93e66f10-8222-4cfa-9cb1-4ba64c0de10c",
+#   "playerId": "1b076f67-f730-4c37-bd26-f2ca34bd1d4f",
+#   "transactionValue": 100
+# }
