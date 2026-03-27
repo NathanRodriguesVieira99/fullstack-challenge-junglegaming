@@ -1,19 +1,21 @@
-import { Controller, Post, Req, UseGuards } from "@nestjs/common";
-import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
-import type { Request } from "express";
-import { JwtGuard } from "../../../infrastructure/auth/jwt/jwt.guard";
-import { CreditService } from "../../../application/services/transactions/credit.service";
+import { MessagePattern, Payload } from "@nestjs/microservices";
+import { Controller, UseGuards } from "@nestjs/common";
 
-@ApiTags("Wallets - Credit")
-// @ApiBearerAuth()
-// @UseGuards(JwtGuard)
-@Controller("wallets")
+import { JwtGuard } from "../../../infrastructure/auth/jwt/jwt.guard";
+
+import { CreditService } from "../../../application/services/transactions/credit.service";
+import type {
+  CreditRequestDto,
+  CreditResponseDto,
+} from "@/presentation/dtos/credit.dto";
+
+@UseGuards(JwtGuard)
+@Controller("credit")
 export class CreditController {
   constructor(private readonly service: CreditService) {}
 
-  @Post("credit")
-  credit(@Req() req: Request & { user: { userId: string } }) {
-    // const playerId = req.user.userId;
-    return this.service.execute(); // { playerId }
+  @MessagePattern("credit.transaction")
+  credit(@Payload() payload: CreditRequestDto): Promise<CreditResponseDto> {
+    return this.service.execute(payload);
   }
 }
