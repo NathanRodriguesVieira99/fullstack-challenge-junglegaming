@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
-import {
+import type {
   CreditRequestDto,
   CreditResponseDto,
 } from "../../../presentation/dtos/credit.dto";
