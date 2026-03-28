@@ -13,7 +13,10 @@ import { Decimal } from "@prisma/client/runtime/client";
 import { UnauthorizedException } from "@nestjs/common";
 
 import { mockKafkaProducer } from "../../../../__mocks__/kafka.mock";
-import { KAFKA_TOPICS, KAFKA_CLIENTS } from "../../../../../src/constants/kafka";
+import {
+  KAFKA_TOPICS,
+  KAFKA_CLIENTS,
+} from "../../../../../src/constants/kafka";
 
 const { mockTransactionRepository } = vi.hoisted(() => ({
   mockTransactionRepository: {
@@ -42,6 +45,8 @@ describe("DebitService", () => {
   let sut: DebitService;
 
   beforeEach(async () => {
+    vi.clearAllMocks();
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         DebitService,
@@ -100,78 +105,67 @@ describe("DebitService", () => {
           },
         );
       });
+
+      it("should NOT call repository when validation fails", async () => {
+        const fakeParams = { ...params, walletId: "" };
+
+        await expect(sut.execute(fakeParams)).rejects.toThrow(
+          "Not allowed to complete the transaction!",
+        );
+        expect(
+          mockTransactionRepository.debitTransaction,
+        ).not.toHaveBeenCalled();
+      });
+
+      it("should NOT emit kafka when validation fails", async () => {
+        const fakeParams = { ...params, walletId: "" };
+
+        await expect(sut.execute(fakeParams)).rejects.toThrow(
+          "Not allowed to complete the transaction!",
+        );
+        expect(mockKafkaProducer.emit).not.toHaveBeenCalled();
+      });
     });
 
-    describe("Errors", () => {
-      it("should throw UnauthorizedException() when walletId is not provided", async () => {
-        mockTransactionRepository.debitTransaction.mockRejectedValue(
-          new UnauthorizedException("Not allowed to complete the transaction!"),
-        );
+    describe("Errors - Validation in Service", () => {
+      it("should throw UnauthorizedException when walletId is empty", async () => {
+        const fakeParams = { ...params, walletId: "" };
 
-        await expect(
-          sut.execute({
-            transactionId: "txn-123e4567-e89b-12d3-a456-426614174002",
-            playerId: "1b076f67-f730-4c37-bd26-f2ca34bd1d4f",
-            walletId: "",
-            transactionValue: new Decimal(100),
-          }),
-        ).rejects.toThrow(
-          new UnauthorizedException("Not allowed to complete the transaction!"),
+        await expect(sut.execute(fakeParams)).rejects.toThrow(
+          UnauthorizedException,
+        );
+        await expect(sut.execute(fakeParams)).rejects.toThrow(
+          "Not allowed to complete the transaction!",
         );
       });
 
-      it("should throw UnauthorizedException() when playerId is not equal to playerId from request", async () => {
-        const InvalidParams = {
-          ...params,
-          playerId: "id-invalido",
-        };
+      it("should throw UnauthorizedException when playerId is empty", async () => {
+        const fakeParams = { ...params, playerId: "" };
 
-        mockTransactionRepository.debitTransaction.mockRejectedValue(
-          new UnauthorizedException("Not allowed to complete the transaction!"),
-        );
-
-        await expect(sut.execute(InvalidParams)).rejects.toThrow(
-          new UnauthorizedException("Not allowed to complete the transaction!"),
+        await expect(sut.execute(fakeParams)).rejects.toThrow(
+          UnauthorizedException,
         );
       });
 
-      it("should throw UnauthorizedException() when balance is insufficient", async () => {
-        const InvalidParams = {
-          ...params,
-          transactionValue: new Decimal(100),
-          currentBalance: new Decimal(40),
-        };
+      it("should throw UnauthorizedException when transactionValue is less than 1", async () => {
+        const fakeParams = { ...params, transactionValue: new Decimal(0) };
 
-        mockTransactionRepository.debitTransaction.mockRejectedValue(
-          new UnauthorizedException(
-            "Not allowed to complete the transaction! The balance is insufficient!",
-          ),
+        await expect(sut.execute(fakeParams)).rejects.toThrow(
+          UnauthorizedException,
         );
-
-        await expect(sut.execute(InvalidParams)).rejects.toThrow(
-          new UnauthorizedException(
-            "Not allowed to complete the transaction! The balance is insufficient!",
-          ),
+        await expect(sut.execute(fakeParams)).rejects.toThrow(
+          "The minimal bet value is 1.00",
         );
       });
 
-      it("should throw UnauthorizedException() when balance is negative", async () => {
-        const InvalidParams = {
-          ...params,
-          transactionValue: new Decimal(100),
-          currentBalance: new Decimal(0),
-        };
+      it("should throw UnauthorizedException when transactionValue is greater than 1000", async () => {
+        const fakeParams = { ...params, transactionValue: new Decimal(1001) };
 
-        mockTransactionRepository.debitTransaction.mockRejectedValue(
-          new UnauthorizedException(
-            "Not allowed to complete the transaction! The balance is negative!",
-          ),
+        await expect(sut.execute(fakeParams)).rejects.toThrow(
+          UnauthorizedException,
         );
-
-        await expect(sut.execute(InvalidParams)).rejects.toThrow(
-          new UnauthorizedException(
-            "Not allowed to complete the transaction! The balance is negative!",
-          ),
+        await expect(sut.execute(fakeParams)).rejects.toThrow(
+          "The max bet value is 1000.00",
         );
       });
     });
