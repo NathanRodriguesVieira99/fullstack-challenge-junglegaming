@@ -1,0 +1,1 @@
+# Os imports nos arquivos de teste ficaram grandes por que, por algum motivo o vitest não estava conseguindo resolver os paths customizado no tsconfig.json, então apenas para agilizar o processo eu usei os caminhos na forma padrão
