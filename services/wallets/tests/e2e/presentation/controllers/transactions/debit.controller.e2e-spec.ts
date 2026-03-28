@@ -5,7 +5,7 @@ import { INestApplication } from "@nestjs/common";
 import { AppModule } from "@/app.module";
 import { mockKafkaProducer } from "../../../../__mocks__/kafka.mock";
 
-describe("DebitController (e2e)", () => {
+describe("CreditController (e2e)", () => {
   let app: INestApplication;
 
   beforeAll(async () => {
