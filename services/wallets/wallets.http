@@ -47,8 +47,8 @@ Authorization: Bearer {{access_token}}
 
 
 {
-  "walletId": "d1744033-3ca2-4528-b03d-e8bb7088ebb2",
-  "playerId": "70be2634-f9dc-4592-b258-9ccc482fe7e3",
+  "walletId": "88fa85f4-825a-4234-b460-66aedfc19578",
+  "playerId": "87da55a3-c991-4c47-b72f-8f377b8bfa65",
   "transactionValue": 100
 }
 
@@ -60,8 +60,9 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 
+
 {
-   "walletId": "d1744033-3ca2-4528-b03d-e8bb7088ebb2",
-  "playerId": "70be2634-f9dc-4592-b258-9ccc482fe7e3",
+  "walletId": "88fa85f4-825a-4234-b460-66aedfc19578",
+  "playerId": "87da55a3-c991-4c47-b72f-8f377b8bfa65",
   "transactionValue": 100
 }
