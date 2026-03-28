@@ -32,19 +32,19 @@ export class CreateWalletController {
   @ApiBearerAuth()
   @ApiOperation({
     operationId: "createWallet",
-    summary: "Create a new wallet for the player",
+    summary: "Cria uma nova carteira para o jogador",
     description:
-      "Creates a new wallet for the authenticated player with an initial balance of 1000.00. Each player can only have one wallet.",
+      "Cria uma nova carteira para o jogador autenticado com saldo inicial de 1000.00. Cada jogador pode ter apenas uma carteira.",
   })
   @ApiCreatedResponse({
-    description: "Wallet successfully created with initial balance",
+    description: "Carteira criada com sucesso com saldo inicial",
     type: CreateWalletResponseDto,
   })
   @ApiUnauthorizedResponse({
-    description: "Unauthorized - Invalid or missing JWT token",
+    description: "Não autorizado - Token JWT inválido ou ausente",
   })
   @ApiConflictResponse({
-    description: "Conflict - Player already has an existing wallet",
+    description: "Conflito - Jogador já possui uma carteira",
   })
   create(@Req() req: { user: { userId: string } }) {
     const playerId = req.user.userId;
