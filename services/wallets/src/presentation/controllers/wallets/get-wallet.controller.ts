@@ -29,22 +29,22 @@ export class GetWalletController {
   @ApiBearerAuth()
   @ApiOperation({
     operationId: "getPlayerWallet",
-    summary: "Get authenticated player's wallet",
+    summary: "Retorna a carteira do jogador autenticado",
     description:
-      "Retrieves the wallet associated with the authenticated player. Returns wallet details including current balance, creation date, and last update timestamp.",
+      "Retorna os detalhes da carteira associada ao jogador autenticado, incluindo saldo atual, data de criação e última atualização.",
   })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: "Wallet successfully retrieved",
+    description: "Carteira retornada com sucesso",
     type: CreateWalletResponseDto,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
-    description: "Unauthorized - Invalid or missing JWT token",
+    description: "Não autorizado - Token JWT inválido ou ausente",
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
-    description: "Wallet not found for the authenticated player",
+    description: "Carteira não encontrada para o jogador autenticado",
   })
   get(@Req() req: { user: { userId: string } }) {
     const playerId = req.user.userId;
