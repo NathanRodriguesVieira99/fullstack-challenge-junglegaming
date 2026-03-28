@@ -3,7 +3,6 @@ import {
   Get,
   HttpCode,
   HttpStatus,
-  Param,
   Query,
   Req,
   UseGuards,
@@ -28,13 +27,16 @@ export interface DebitMessageContract {
 
 @Controller("games")
 @ApiTags("Bets")
-export class betsHistoryController {
+export class BetsHistoryController {
   constructor(private readonly service: BetsHistoryService) {}
 
   @MessagePattern(KAFKA_TOPICS.DEBIT_TRANSACTION)
-  async kafkaMessage(@Payload() message: DebitMessageContract) {
+  async kafkaMessage(
+    @Payload() message: DebitMessageContract,
+    @Query() queryParams: PaginationQuery,
+  ) {
     const playerId = message.playerId;
-    console.log(playerId);
+    return this.service.execute(queryParams, playerId);
   }
 
   @UseGuards(JwtGuard)
