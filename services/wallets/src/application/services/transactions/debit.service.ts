@@ -1,16 +1,18 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { TransactionRepositoryContract } from "../../../domain/repositories/transactions/transactions.repository.contract";
 
-import type { ClientKafka } from "@nestjs/microservices";
-import type {
+import {
   DebitRequestDto,
   DebitResponseDto,
 } from "../../../presentation/dtos/debit.dto";
 
+import type { ClientKafka } from "@nestjs/microservices";
+import { KAFKA_CLIENTS, KAFKA_TOPICS } from "../../../constants/kafka";
+
 @Injectable()
 export class DebitService {
   constructor(
-    @Inject("wallets-producer") private readonly kafka: ClientKafka,
+    @Inject(KAFKA_CLIENTS.PRODUCER) private readonly kafka: ClientKafka,
     private readonly repo: TransactionRepositoryContract,
   ) {}
 
@@ -29,7 +31,7 @@ export class DebitService {
       transactionValue: amount,
     });
 
-    this.kafka.emit("debit.transaction", {
+    this.kafka.emit(KAFKA_TOPICS.DEBIT_TRANSACTION, {
       transaction: transactionId,
       wallet: walletId,
       player: playerId,
