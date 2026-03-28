@@ -122,7 +122,7 @@
     },
     "/games/rounds/current": {
       "get": {
-        "operationId": "roundsController_currentRound",
+        "operationId": "RoundsController_currentRound",
         "parameters": [],
         "responses": {
           "200": {
@@ -136,7 +136,7 @@
     },
     "/games/rounds/history": {
       "get": {
-        "operationId": "roundsController_roundHistory",
+        "operationId": "RoundsController_roundHistory",
         "parameters": [],
         "responses": {
           "200": {
@@ -150,7 +150,7 @@
     },
     "/games/rounds/{roundId}/verify": {
       "get": {
-        "operationId": "roundsController_verify",
+        "operationId": "RoundsController_verify",
         "parameters": [],
         "responses": {
           "200": {
@@ -200,13 +200,21 @@
         "type": "object",
         "properties": {
           "betId": {
-            "type": "string"
+            "type": "string",
+            "description": "ID único da aposta"
           },
           "playerId": {
-            "type": "string"
+            "type": "string",
+            "description": "ID único do jogador",
+            "format": "uuid"
           },
           "amount": {
-            "$ref": "#/components/schemas/Decimal2"
+            "description": "Valor da aposta",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Decimal2"
+              }
+            ]
           },
           "betStatus": {
             "type": "string",
@@ -215,7 +223,8 @@
               "WON",
               "LOST",
               "CASHED_OUT"
-            ]
+            ],
+            "description": "Status da aposta"
           },
           "roundStatus": {
             "type": "string",
@@ -224,10 +233,13 @@
               "RUNNING",
               "CRASHED",
               "FINALIZED"
-            ]
+            ],
+            "description": "Status da rodada"
           },
           "roundId": {
-            "type": "string"
+            "type": "string",
+            "description": "ID da rodada",
+            "format": "uuid"
           }
         },
         "required": [
