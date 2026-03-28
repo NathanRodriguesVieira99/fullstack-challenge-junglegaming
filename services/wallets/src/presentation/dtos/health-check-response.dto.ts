@@ -2,14 +2,14 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class HealthCheckResponseDto {
   @ApiProperty({
-    description: "Current health status of the service",
+    description: "Status atual de saúde do serviço",
     example: "ok",
     type: String,
   })
   status: string;
 
   @ApiProperty({
-    description: "Name of the service reporting health status",
+    description: "Nome do serviço que está reportando",
     example: "wallets",
     type: String,
   })
