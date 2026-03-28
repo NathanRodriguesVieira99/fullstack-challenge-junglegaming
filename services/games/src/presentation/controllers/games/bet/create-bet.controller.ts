@@ -1,4 +1,4 @@
-import { JwtGuard } from "@/infrastructure/auth/jwt/jwt.guard";
+import { JwtGuard } from "../../../../infrastructure/auth/jwt/jwt.guard";
 import { CreateBetService } from "../../../../application/services/games/bet/create-bet.service";
 import { KAFKA_TOPICS } from "../../../../constants/kafka";
 import { CreateBetRequestDto } from "../../../dtos/bet.dto";
