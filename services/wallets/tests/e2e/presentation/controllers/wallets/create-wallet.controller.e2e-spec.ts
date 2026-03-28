@@ -11,7 +11,7 @@ import { DatabaseService } from "../../../../../src/infrastructure/database/data
 import { MockJwtGuard } from "../../../../__mocks__/jwt.guard.mock";
 import { JwtGuard } from "../../../../../src/infrastructure/auth/jwt/jwt.guard";
 
-describe("CreateWalletController E2E", () => {
+describe("[E2E] CreateWalletController", () => {
   let app: INestApplication;
   let db: DatabaseService;
 
