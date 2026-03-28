@@ -38,14 +38,14 @@
 
 ### Game Service — `/games`
 
-| Método | Endpoint                        | Auth | Descrição                                  | Status          |
-| ------ | ------------------------------- | ---- | ------------------------------------------ | --------------- |
-| `GET`  | `/games/rounds/current`         | Não  | Estado da rodada atual com apostas         | ⚠️ Esqueleto    |
-| `GET`  | `/games/rounds/history`         | Não  | Histórico paginado de rodadas              | ⚠️ Esqueleto    |
-| `GET`  | `/games/rounds/:roundId/verify` | Não  | Dados de verificação provably fair         | ⚠️ Esqueleto    |
-| `GET`  | `/games/bets/me`                | Sim  | Histórico de apostas do jogador (paginado) | ✅ Implementado |
-| `POST` | `/games/bet`                    | Sim  | Fazer aposta na rodada atual               | ✅ Implementado |
-| `POST` | `/games/bet/cashout`            | Sim  | Sacar no multiplicador atual               | ⚠️ Esqueleto    |
+| Método | Endpoint                        | Auth | Descrição                                  | Status                       |
+| ------ | ------------------------------- | ---- | ------------------------------------------ | ---------------------------- |
+| `GET`  | `/games/rounds/current`         | Não  | Estado da rodada atual com apostas         | ⚠️ Esqueleto                 |
+| `GET`  | `/games/rounds/history`         | Não  | Histórico paginado de rodadas              | ⚠️ Esqueleto                 |
+| `GET`  | `/games/rounds/:roundId/verify` | Não  | Dados de verificação provably fair         | ⚠️ Esqueleto                 |
+| `GET`  | `/games/bets/me`                | Sim  | Histórico de apostas do jogador (paginado) | ✅ Implementado              |
+| `POST` | `/games/bet`                    | Sim  | Fazer aposta na rodada atual               | ⌛ Implementado Parcialmente |
+| `POST` | `/games/bet/cashout`            | Sim  | Sacar no multiplicador atual               | ⚠️ Esqueleto                 |
 
 ---
 
