@@ -3,7 +3,7 @@ model Bet {
   id          String     @id @default(uuid())
   status      BET_STATUS
   playerId    String     @map("player_id")
-  amount      BigInt
+  amount      Decimal    @db.Money
   cashedOutAt DateTime   @map("cashed_out_at")
   createdAt   DateTime   @default(now()) @map("created_at")
 
