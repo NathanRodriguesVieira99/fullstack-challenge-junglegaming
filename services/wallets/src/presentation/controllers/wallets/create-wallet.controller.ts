@@ -13,12 +13,10 @@ import {
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
-  ApiBody,
 } from "@nestjs/swagger";
 import { Decimal } from "@prisma/client/runtime/client";
 import { JwtGuard } from "../../../infrastructure/auth/jwt/jwt.guard";
 import {
-  CreateWalletRequestDto,
   CreateWalletResponseDto,
 } from "../../../presentation/dtos/wallet.dto";
 import { CreateWalletService } from "../../../application/services/wallets/create-wallet.service";
@@ -48,7 +46,6 @@ export class CreateWalletController {
   @ApiConflictResponse({
     description: "Conflito - Jogador já possui uma carteira",
   })
-  @ApiBody({ type: CreateWalletRequestDto })
   create(@Req() req: { user: { userId: string } }) {
     const playerId = req.user.userId;
     return this.service.execute({ playerId, balance: new Decimal(1000) });
