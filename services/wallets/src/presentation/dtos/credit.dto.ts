@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import type { Decimal } from "@prisma/client/runtime/client";
-import { IsNotEmpty, IsNumber, IsString, IsUUID } from "class-validator";
+import { IsNotEmpty, IsNumberString, IsString, IsUUID } from "class-validator";
 
 export class CreditRequestDto {
   @ApiProperty({
@@ -39,7 +39,7 @@ export class CreditRequestDto {
     example: "50.00",
     type: String,
   })
-  @IsNumber()
+  @IsNumberString()
   @IsNotEmpty()
   transactionValue: Decimal;
 }
@@ -58,9 +58,6 @@ export class CreditResponseDto {
     format: "uuid",
     type: String,
   })
-  @IsString()
-  @IsNotEmpty()
-  @IsUUID()
   playerId: string;
 
   @ApiProperty({

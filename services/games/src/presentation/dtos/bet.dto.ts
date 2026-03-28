@@ -3,6 +3,7 @@ import {
   ROUND_STATUS,
 } from "../../infrastructure/database/generated/enums";
 import { Decimal } from "@prisma/client/runtime/client";
+import { IsEnum, IsNotEmpty, IsNumberString, IsString, IsUUID } from "class-validator";
 
 export type PaginationQuery = {
   page?: number; // página atual
@@ -39,22 +40,34 @@ export class BetHistoryResponseDto {
 }
 
 export class CreateBetRequestDto {
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, description: "ID único da aposta" })
+  @IsString()
+  @IsNotEmpty()
   betId: string;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, description: "ID único do jogador", format: "uuid" })
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
   playerId: string;
 
-  @ApiProperty({ type: () => Decimal })
+  @ApiProperty({ type: () => Decimal, description: "Valor da aposta" })
+  @IsNumberString()
+  @IsNotEmpty()
   amount: Decimal;
 
-  @ApiProperty({ enum: BET_STATUS })
+  @ApiProperty({ enum: BET_STATUS, description: "Status da aposta" })
+  @IsEnum(BET_STATUS)
   betStatus: BET_STATUS;
 
-  @ApiProperty({ enum: ROUND_STATUS })
+  @ApiProperty({ enum: ROUND_STATUS, description: "Status da rodada" })
+  @IsEnum(ROUND_STATUS)
   roundStatus: ROUND_STATUS;
 
-  @ApiProperty({ type: String })
+  @ApiProperty({ type: String, description: "ID da rodada", format: "uuid" })
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID()
   roundId: string;
 }
 
