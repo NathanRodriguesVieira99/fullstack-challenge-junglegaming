@@ -1,7 +1,7 @@
 // Entidade responsável pela rodada
 model Round {
   id                 String       @id @default(uuid())
-  status             ROUND_STATUS
+  roundStatus        ROUND_STATUS @default(WAITING) @map("round_status")
   crashPoint         Float        @map("crash_point")
   startTime          DateTime     @default(now()) @map("start_time")
   endTime            DateTime     @map("end_time")
