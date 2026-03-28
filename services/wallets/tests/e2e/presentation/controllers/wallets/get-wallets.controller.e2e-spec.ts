@@ -1,26 +1,29 @@
 import { Test } from "@nestjs/testing";
 import type { INestApplication } from "@nestjs/common";
 
-import { describe, it, expect, afterAll, beforeAll } from "vitest";
-import { CLIENT_ID, KEYCLOAK_URL, REALM } from "../../../shared/constants";
+import { describe, it, expect, afterAll, beforeAll, beforeEach } from "vitest";
+
+import { AppModule } from "../../../../../src/app.module";
+
+import { DatabaseService } from "../../../../../src/infrastructure/database/database.service";
 
 import request from "supertest";
 
-import { AppModule } from "../../../../../src/app.module";
-import { DatabaseService } from "../../../../../src/infrastructure/database/database.service";
-import { mockKafkaProducer } from "../../../../__mocks__/kafka.mock";
+import { JwtGuard } from "../../../../../src/infrastructure/auth/jwt/jwt.guard";
+import { MockJwtGuard } from "../../../../__mocks__/jwt.guard.mock";
 
 describe("[E2E] GetWallet Controller ", () => {
   let app: INestApplication;
-  let accessToken: string;
   let db: DatabaseService;
+
+  const MOCK_TOKEN = "mock-jwt-token";
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
     })
-      .overrideProvider("wallets-producer")
-      .useValue(mockKafkaProducer)
+      .overrideGuard(JwtGuard)
+      .useClass(MockJwtGuard)
       .compile();
 
     app = moduleRef.createNestApplication();
@@ -30,18 +33,11 @@ describe("[E2E] GetWallet Controller ", () => {
   });
 
   beforeEach(async () => {
-    const tokenResponse = await request(KEYCLOAK_URL)
-      .post(`/realms/${REALM}/protocol/openid-connect/token`)
-      .set("Content-Type", "application/x-www-form-urlencoded")
-      .send(
-        `grant_type=password&client_id=${CLIENT_ID}&username=player&password=player123&scope=openid`,
-      );
-
-    accessToken = tokenResponse.body.access_token;
+    await db.wallet.deleteMany();
 
     await request(app.getHttpServer())
       .post("/wallets")
-      .set("Authorization", `Bearer ${accessToken}`);
+      .set("Authorization", `Bearer ${MOCK_TOKEN}`);
   });
 
   afterAll(async () => {
@@ -53,7 +49,7 @@ describe("[E2E] GetWallet Controller ", () => {
       it("should return wallet when authenticated and wallet exists", async () => {
         const response = await request(app.getHttpServer())
           .get("/wallets/me")
-          .set("Authorization", `Bearer ${accessToken}`);
+          .set("Authorization", `Bearer ${MOCK_TOKEN}`);
 
         expect(response.status).toBe(200);
         expect(response.body).toHaveProperty("id");
@@ -64,7 +60,7 @@ describe("[E2E] GetWallet Controller ", () => {
       it("should return wallet with sanitized bigint balance as string", async () => {
         const response = await request(app.getHttpServer())
           .get("/wallets/me")
-          .set("Authorization", `Bearer ${accessToken}`);
+          .set("Authorization", `Bearer ${MOCK_TOKEN}`);
 
         expect(response.status).toBe(200);
         expect(typeof response.body.balance).toBe("string");
@@ -80,7 +76,7 @@ describe("[E2E] GetWallet Controller ", () => {
       it("should return 401 when token is invalid", async () => {
         const response = await request(app.getHttpServer())
           .get("/wallets/me")
-          .set("Authorization", "Bearer invalid-token");
+          .set("Authorization", "Bearer ");
 
         expect(response.status).toBe(401);
       });
