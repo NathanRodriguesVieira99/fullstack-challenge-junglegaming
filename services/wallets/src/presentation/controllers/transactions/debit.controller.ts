@@ -1,5 +1,5 @@
 import { MessagePattern, Payload } from "@nestjs/microservices";
-import { Controller, UseGuards } from "@nestjs/common";
+import { Body, Controller, Post, UseGuards } from "@nestjs/common";
 
 import { JwtGuard } from "@/infrastructure/auth/jwt/jwt.guard";
 
@@ -12,7 +12,14 @@ export class DebitController {
   constructor(private readonly service: DebitService) {}
 
   @MessagePattern("debit.transaction")
-  async debit(@Payload() payload: DebitRequestDto): Promise<DebitResponseDto> {
+  async debitMessage(
+    @Payload() payload: DebitRequestDto,
+  ): Promise<DebitResponseDto> {
     return this.service.execute(payload);
+  }
+
+  @Post()
+  debit(@Body() body: DebitRequestDto) {
+    return this.service.execute(body);
   }
 }

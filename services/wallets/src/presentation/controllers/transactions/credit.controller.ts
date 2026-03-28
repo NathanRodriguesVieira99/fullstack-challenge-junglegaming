@@ -1,5 +1,5 @@
 import { MessagePattern, Payload } from "@nestjs/microservices";
-import { Controller, UseGuards } from "@nestjs/common";
+import { Body, Controller, Post, UseGuards } from "@nestjs/common";
 
 import { JwtGuard } from "../../../infrastructure/auth/jwt/jwt.guard";
 
@@ -15,7 +15,14 @@ export class CreditController {
   constructor(private readonly service: CreditService) {}
 
   @MessagePattern("credit.transaction")
-  credit(@Payload() payload: CreditRequestDto): Promise<CreditResponseDto> {
+  creditMessage(
+    @Payload() payload: CreditRequestDto,
+  ): Promise<CreditResponseDto> {
     return this.service.execute(payload);
+  }
+
+  @Post()
+  credit(@Body() body: CreditRequestDto) {
+    return this.service.execute(body);
   }
 }
