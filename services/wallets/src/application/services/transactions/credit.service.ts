@@ -1,4 +1,8 @@
-import { Inject, Injectable } from "@nestjs/common";
+import {
+  Inject,
+  Injectable,
+  UnauthorizedException,
+} from "@nestjs/common";
 import type {
   CreditRequestDto,
   CreditResponseDto,
@@ -8,6 +12,7 @@ import type { ClientKafka } from "@nestjs/microservices";
 import { KAFKA_CLIENTS, KAFKA_TOPICS } from "../../../constants/kafka";
 
 import { TransactionRepositoryContract } from "../../../domain/repositories/transactions/transactions.repository.contract";
+import { Decimal } from "@prisma/client/runtime/client";
 
 @Injectable()
 export class CreditService {
@@ -22,7 +27,26 @@ export class CreditService {
     walletId,
     playerId,
   }: CreditRequestDto): Promise<CreditResponseDto> {
-    const amount = transactionValue;
+    if (!walletId) {
+      throw new UnauthorizedException(
+        "Not allowed to complete the transaction!",
+      );
+    }
+
+    if (!playerId) {
+      throw new UnauthorizedException(
+        "Not allowed to complete the transaction!",
+      );
+    }
+
+    const value = new Decimal(transactionValue);
+    if (value.lt(1)) {
+      throw new UnauthorizedException("The minimal value to bet is 1.00");
+    }
+    
+    if (value.gt(1000)) {
+      throw new UnauthorizedException("The max value to bet is 1000.00");
+    }
 
     const transaction = await this.repo.creditTransaction({
       transactionId,
@@ -35,7 +59,7 @@ export class CreditService {
       transaction: transactionId,
       wallet: walletId,
       player: playerId,
-      credited_value: amount,
+      credited_value: transactionValue,
     });
 
     return transaction;
