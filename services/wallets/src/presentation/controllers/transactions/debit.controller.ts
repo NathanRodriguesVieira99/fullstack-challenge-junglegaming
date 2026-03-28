@@ -1,11 +1,12 @@
 import { MessagePattern, Payload } from "@nestjs/microservices";
 import { Body, Controller, Post, UseGuards } from "@nestjs/common";
-import { ApiBody, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { ApiBody, ApiTags } from "@nestjs/swagger";
 
 import { JwtGuard } from "@/infrastructure/auth/jwt/jwt.guard";
 
 import { DebitService } from "../../../application/services/transactions/debit.service";
 import { DebitRequestDto, DebitResponseDto } from "../../dtos/debit.dto";
+import { KAFKA_TOPICS } from "@/constants/kafka";
 
 @ApiTags("debit")
 @UseGuards(JwtGuard)
@@ -13,7 +14,8 @@ import { DebitRequestDto, DebitResponseDto } from "../../dtos/debit.dto";
 export class DebitController {
   constructor(private readonly service: DebitService) {}
 
-  @MessagePattern("debit.transaction")  async debitMessage(
+  @MessagePattern(KAFKA_TOPICS.DEBIT_TRANSACTION)
+  async debitMessage(
     @Payload() payload: DebitRequestDto,
   ): Promise<DebitResponseDto> {
     return this.service.execute(payload);
