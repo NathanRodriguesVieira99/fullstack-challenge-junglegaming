@@ -30,8 +30,6 @@ describe("CreateWalletController E2E", () => {
   });
 
   beforeEach(async () => {
-    await db.wallet.deleteMany();
-    
     const tokenResponse = await request(KEYCLOAK_URL)
       .post(`/realms/${REALM}/protocol/openid-connect/token`)
       .set("Content-Type", "application/x-www-form-urlencoded")
