@@ -1,5 +1,5 @@
-import { BetsRepositoryContract } from "@/domain/repositories/bets/bets.repository.contract";
-import type { PaginationQuery } from "@/presentation/dtos/bet.dto";
+import { BetsRepositoryContract } from "../../../../domain/repositories/bets/bets.repository.contract";
+import type { PaginationQuery } from "../../../../presentation/dtos/bet.dto";
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
