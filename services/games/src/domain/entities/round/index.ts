@@ -1,27 +1,23 @@
-import { Bet } from "../bet";
-
-type ROUND_STATUS = "WAITING" | "RUNNING" | "CRASHED" | "FINALIZED";
+import type { ROUND_STATUS } from "@/infrastructure/database/generated/enums";
 
 interface RoundProps {
   id: string;
-  status: ROUND_STATUS;
+  roundStatus: ROUND_STATUS;
   crashPoint: number;
   startTime: Date;
   endTime: Date;
   provablyFairHash: string;
   provablyFairSalt: string;
   provablyFairResult: string;
-  bets: Bet[];
 }
 
 export class Round implements RoundProps {
   id: string;
-  status: ROUND_STATUS;
+  roundStatus: ROUND_STATUS;
   crashPoint: number;
   startTime: Date;
   endTime: Date;
   provablyFairHash: string;
   provablyFairSalt: string;
   provablyFairResult: string;
-  bets: Bet[];
 }
