@@ -24,7 +24,5 @@ describe.skip("CreditController (e2e)", () => {
     await app.close();
   });
 
-  describe.skip("", () => {
-    describe("Happy-Path", () => {});
-  });
+  describe.skip("", () => {});
 });

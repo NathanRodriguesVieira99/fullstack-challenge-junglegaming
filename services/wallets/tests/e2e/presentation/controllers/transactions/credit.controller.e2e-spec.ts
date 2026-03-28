@@ -24,7 +24,5 @@ describe.skip("DebitController (e2e)", () => {
     await app.close();
   });
 
-  describe.skip("", () => {
-    describe("Happy-Path", () => {});
-  });
+  describe.skip("", () => {});
 });
