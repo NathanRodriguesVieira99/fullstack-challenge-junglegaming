@@ -40,15 +40,28 @@ Authorization: Bearer {{access_token}}
 
 ###
  
- ### copiar os IDs das requisições anteriores ou do db
  # @name debit_transaction
-# POST {{base_url}}/debit
-# Content-Type: application/json
-# Authorization: Bearer {{access_token}}
+POST {{base_url}}/debit
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
 
 
-# {
-#   "walletId": "93e66f10-8222-4cfa-9cb1-4ba64c0de10c",
-#   "playerId": "1b076f67-f730-4c37-bd26-f2ca34bd1d4f",
-#   "transactionValue": 100
-# }
+{
+  "walletId": "8715e3aa-0cf2-4cc6-a315-c6a00e5ea5e2",
+  "playerId": "70be2634-f9dc-4592-b258-9ccc482fe7e3",
+  "transactionValue": 100
+}
+
+###
+
+ # @name credit_transaction
+POST {{base_url}}/credit
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+
+{
+  "walletId": "8715e3aa-0cf2-4cc6-a315-c6a00e5ea5e2",
+  "playerId": "70be2634-f9dc-4592-b258-9ccc482fe7e3",
+  "transactionValue": 100
+}
