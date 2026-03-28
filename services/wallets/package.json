@@ -11,10 +11,10 @@
     "pretest:e2e": "NODE_ENV=test DATABASE_URL=\"postgresql://admin:admin@localhost:5432/wallets_test\" KEYCLOAK_URL=http://localhost:8080 prisma migrate deploy",
     "test:e2e": "NODE_ENV=test DATABASE_URL=\"postgresql://admin:admin@localhost:5432/wallets_test\" KEYCLOAK_URL=http://localhost:8080 vitest run --config ./tests/e2e/vitest.config.e2e.ts",
     "test:cov:e2e": "NODE_ENV=test DATABASE_URL=\"postgresql://admin:admin@localhost:5432/wallets_test\"  KEYCLOAK_URL=http://localhost:8080 vitest run --config ./tests/e2e/vitest.config.e2e.ts --coverage",
-    "db:migrate": "prisma migrate dev",
-    "db:migrate:deploy": "prisma migrate deploy",
-    "db:generate": "prisma generate",
-    "db:studio": "prisma studio",
+    "db:migrate": " NODE_ENV=development DATABASE_URL=\"postgresql://admin:admin@localhost:5432/wallets\" prisma migrate dev",
+    "db:migrate:deploy": " NODE_ENV=development DATABASE_URL=\"postgresql://admin:admin@localhost:5432/wallets\" prisma migrate deploy",
+    "db:generate": " NODE_ENV=development DATABASE_URL=\"postgresql://admin:admin@localhost:5432/wallets\" prisma generate",
+    "db:studio": "NODE_ENV=development DATABASE_URL=\"postgresql://admin:admin@localhost:5432/wallets\" prisma studio",
     "db:seed": " NODE_ENV=development DATABASE_URL=\"postgresql://admin:admin@localhost:5432/wallets\" prisma db seed"
   },
   "dependencies": {
