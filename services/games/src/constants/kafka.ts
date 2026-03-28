@@ -14,4 +14,7 @@ export const KAFKA_CLIENTS_IDS = {
 
 export const KAFKA_BROKER = "kafka:29092"; // fora do Docker => localhost:9092
 
-export const KAFKA_TOPICS = {} as const;
+export const KAFKA_TOPICS = {
+  DEBIT_TRANSACTION: "debit.transaction",
+  BET_CREATED: "bet.created",
+} as const;
