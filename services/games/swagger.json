@@ -17,7 +17,7 @@
             }
           }
         },
-        "summary": "Check service health",
+        "summary": "Verifica a saúde do serviço",
         "tags": [
           "Health"
         ]
@@ -33,7 +33,7 @@
           }
         },
         "tags": [
-          "Bet"
+          "Apostas"
         ]
       }
     },
@@ -47,7 +47,7 @@
           }
         },
         "tags": [
-          "Bet"
+          "Apostas"
         ]
       }
     },
@@ -61,7 +61,7 @@
           }
         },
         "tags": [
-          "Bets"
+          "Minhas Apostas"
         ]
       }
     },
@@ -75,7 +75,7 @@
           }
         },
         "tags": [
-          "Rounds"
+          "Rodadas"
         ]
       }
     },
@@ -89,7 +89,7 @@
           }
         },
         "tags": [
-          "Rounds"
+          "Rodadas"
         ]
       }
     },
@@ -103,7 +103,7 @@
           }
         },
         "tags": [
-          "Rounds"
+          "Rodadas"
         ]
       }
     }
@@ -123,12 +123,12 @@
         "properties": {
           "status": {
             "type": "string",
-            "description": "Current health status of the service",
+            "description": "Status atual de saúde do serviço",
             "example": "ok"
           },
           "service": {
             "type": "string",
-            "description": "Name of the service reporting health status",
+            "description": "Nome do serviço que está reportando",
             "example": "games"
           }
         },
