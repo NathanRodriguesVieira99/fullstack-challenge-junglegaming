@@ -45,9 +45,11 @@ export class TransactionsRepositoryImplementation implements TransactionReposito
         const value = Decimal(new Decimal(transactionValue));
 
         if (value.lt(1))
-          throw new UnauthorizedException("The minimal value to bet is 1.00");
+          throw new UnauthorizedException(
+            "The minimal value to credit is 1.00",
+          );
         if (value.gt(1000))
-          throw new UnauthorizedException("The max value to bet is 1000.00");
+          throw new UnauthorizedException("The max value to credit is 1000.00");
 
         await this.db.wallet.update({
           where: {
@@ -111,10 +113,10 @@ export class TransactionsRepositoryImplementation implements TransactionReposito
         const value = Decimal(transactionValue);
 
         if (value.lt(1))
-          throw new UnauthorizedException("The minimal bet value is 1.00");
+          throw new UnauthorizedException("The minimal debit value is 1.00");
 
         if (value.gt(1000))
-          throw new UnauthorizedException("The max bet value is 1000.00");
+          throw new UnauthorizedException("The max debit value is 1000.00");
 
         if (wallet.balance.lt(value))
           throw new UnauthorizedException(
