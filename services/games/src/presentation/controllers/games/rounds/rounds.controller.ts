@@ -3,7 +3,7 @@ import { ApiTags } from "@nestjs/swagger";
 
 @Controller("games")
 @ApiTags("Rounds")
-export class roundsController {
+export class RoundsController {
   @Get("rounds/current")
   async currentRound() {}
 
