@@ -8,11 +8,11 @@ import type {
 import {
   TRANSACTION_STATUS,
   TRANSACTION_TYPE,
-} from "@/infrastructure/database/generated/enums";
+} from "../../../infrastructure/database/generated/enums";
 import type {
   CreditRequestDto,
   CreditResponseDto,
-} from "@/presentation/dtos/credit.dto";
+} from "../../../presentation/dtos/credit.dto";
 import { Decimal } from "@prisma/client/runtime/client";
 import type { TransactionRepositoryContract } from "./transactions.repository.contract";
 
