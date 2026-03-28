@@ -24,28 +24,6 @@ export class DebitService {
     playerId,
     transactionValue,
   }: DebitRequestDto): Promise<DebitResponseDto> {
-    if (!walletId) {
-      throw new UnauthorizedException(
-        "Not allowed to complete the transaction!",
-      );
-    }
-
-    if (!playerId) {
-      throw new UnauthorizedException(
-        "Not allowed to complete the transaction!",
-      );
-    }
-
-    const value = new Decimal(transactionValue);
-
-    if (value.lt(1)) {
-      throw new UnauthorizedException("The minimal bet value is 1.00");
-    }
-
-    if (value.gt(1000)) {
-      throw new UnauthorizedException("The max bet value is 1000.00");
-    }
-
     const transaction = await this.repo.debitTransaction({
       playerId,
       transactionId,
