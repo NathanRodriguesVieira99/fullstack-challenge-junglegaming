@@ -6,6 +6,7 @@ import {
   Param,
   Query,
   Req,
+UseGuards,
 } from "@nestjs/common";
 
 import { MessagePattern, Payload } from "@nestjs/microservices";
@@ -14,8 +15,9 @@ import { KAFKA_TOPICS } from "@/constants/kafka";
 import { ApiOperation, ApiTags, ApiQuery, ApiResponse } from "@nestjs/swagger";
 
 import { BetsHistoryService } from "@/application/services/games/bets/bets-history.service";
-import type { Decimal } from "@prisma/client/runtime/client";
+import { Decimal } from "@prisma/client/runtime/client";
 import type { PaginationQuery } from "@/presentation/dtos/bet.dto";
+import { JwtGuard } from "@/infrastructure/auth/jwt/jwt.guard";
 
 export interface DebitMessageContract {
   playerId: string;
@@ -31,11 +33,11 @@ export class betsHistoryController {
 
   @MessagePattern(KAFKA_TOPICS.DEBIT_TRANSACTION)
   async kafkaMessage(@Payload() message: DebitMessageContract) {
-    console.log("Mensagem recebida do Wallets Service", message);
     const playerId = message.playerId;
     console.log(playerId);
   }
 
+  @UseGuards(JwtGuard)
   @Get("bets/me")
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
