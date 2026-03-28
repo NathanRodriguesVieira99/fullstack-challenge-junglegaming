@@ -20,17 +20,23 @@ import { WalletsRepositoryImplementation } from "../domain/repositories/wallets/
 import { TransactionRepositoryContract } from "../domain/repositories/transactions/transactions.repository.contract";
 import { TransactionsRepositoryImplementation } from "../domain/repositories/transactions/transactions.repository.implementation";
 
+/* Constants */
+import {
+  KAFKA_BROKER,
+  KAFKA_CLIENTS_IDS,
+  KAFKA_CLIENTS,
+} from "../constants/kafka";
+
 @Module({
   imports: [
-    /* usado para transformar o service em producer */
     ClientsModule.register([
       {
-        name: "wallets-producer",
+        name: KAFKA_CLIENTS.PRODUCER,
         transport: Transport.KAFKA,
         options: {
           client: {
-            clientId: "WALLETS_SERVICE_PRODUCER",
-            brokers: ["kafka:29092"], // fora do Docker => localhost:9092
+            clientId: KAFKA_CLIENTS_IDS.KAFKA_PRODUCER_CLIENT_ID,
+            brokers: [KAFKA_BROKER],
           },
         },
       },

@@ -1,23 +1,32 @@
 import "reflect-metadata";
+import { Transport, type MicroserviceOptions } from "@nestjs/microservices";
 import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
-import type { MicroserviceOptions } from "@nestjs/microservices";
-import { env, Swagger } from "./_config";
 import { Logger } from "@nestjs/common";
+
+import { AppModule } from "./app.module";
+
+import { env, Swagger } from "./_config";
+
+import {
+  KAFKA_BROKER,
+  KAFKA_CLIENTS,
+  KAFKA_CLIENTS_IDS,
+  KAFKA_GROUPS,
+} from "./constants/kafka";
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
 
-  /* usado para transformar o service em consumer */
   app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.KAFKA,
     options: {
-      name: "wallets-consumer",
+      name: KAFKA_CLIENTS.PRODUCER,
       client: {
-        clientId: "WALLETS_SERVICE_CONSUMER",
-        brokers: ["kafka:29092"], // fora do Docker => localhost:9092
+        clientId: KAFKA_CLIENTS_IDS.KAFKA_CONSUMER_CLIENT_ID,
+        brokers: [KAFKA_BROKER],
       },
       consumer: {
-        groupId: "wallets-consumer",
+        groupId: KAFKA_GROUPS.KAFKA_CONSUMER_GROUP,
       },
     },
   });
