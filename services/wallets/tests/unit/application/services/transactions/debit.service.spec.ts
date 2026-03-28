@@ -4,30 +4,31 @@ import { describe, beforeEach, it, expect, vi } from "vitest";
 import { DebitService } from "../../../../../src/application/services/transactions/debit.service";
 import { TransactionRepositoryContract } from "../../../../../src/domain/repositories/transactions/transactions.repository.contract";
 import {
-  TransactionResponseDto,
-  type TransactionRequestDto,
-} from "../../../../../src/presentation/dtos/transaction.dto";
+  DebitResponseDto,
+  type DebitRequestDto,
+} from "../../../../../src/presentation/dtos/debit.dto";
 
 import { TRANSACTION_TYPE } from "../../../../../src/infrastructure/database/generated/enums";
 import { Decimal } from "@prisma/client/runtime/client";
 import { UnauthorizedException } from "@nestjs/common";
 
 import { mockKafkaProducer } from "../../../../__mocks__/kafka.mock";
+import { KAFKA_TOPICS } from "../../../../../src/constants/kafka";
 
 const { mockTransactionRepository } = vi.hoisted(() => ({
   mockTransactionRepository: {
-    debitTransaction: vi.fn<() => Promise<TransactionResponseDto>>(),
+    debitTransaction: vi.fn<() => Promise<DebitResponseDto>>(),
   },
 }));
 
-const makeSutParams = (): TransactionRequestDto => ({
+const makeSutParams = (): DebitRequestDto => ({
   transactionId: "txn-123e4567-e89b-12d3-a456-426614174002",
   playerId: "1b076f67-f730-4c37-bd26-f2ca34bd1d4f",
   walletId: "9927efd0-1e14-421d-8112-c4be3419d5eb",
   transactionValue: new Decimal(100),
 });
 
-const makeResponse = (): TransactionResponseDto => ({
+const makeResponse = (): DebitResponseDto => ({
   transactionId: "txn-123e4567-e89b-12d3-a456-426614174002",
   walletId: "9927efd0-1e14-421d-8112-c4be3419d5eb",
   playerId: "1b076f67-f730-4c37-bd26-f2ca34bd1d4f",
@@ -90,7 +91,7 @@ describe("DebitService", () => {
         await sut.execute(params);
 
         expect(mockKafkaProducer.emit).toHaveBeenCalledWith(
-          "debit.transaction",
+          KAFKA_TOPICS.DEBIT_TRANSACTION,
           {
             transaction: params.transactionId,
             wallet: params.walletId,
