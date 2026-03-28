@@ -26,6 +26,11 @@ jobs:
           POSTGRES_DB: postgres
           POSTGRES_EXTRA_DATABASES: games,wallets,admin
 
+      kafka:
+        image: confluentinc/cp-kafka:7.8.0
+        ports:
+          - "9092:9092"
+
     steps:
       # faz o checkout do código
       - name: Checkout code
