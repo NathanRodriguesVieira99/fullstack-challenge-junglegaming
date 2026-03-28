@@ -33,7 +33,7 @@ export class WalletsRepositoryImplementation implements WalletsRepositoryContrac
 
       const isDecimalBalance = new Decimal(balance);
 
-      if (isDecimalBalance.lt(1000))
+      if (isDecimalBalance.lt(1))
         throw new UnauthorizedException("Balance should not be negative");
 
       if (isDecimalBalance.gt(1000))

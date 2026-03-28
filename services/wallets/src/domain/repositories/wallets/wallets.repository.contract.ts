@@ -1,4 +1,5 @@
 import { Wallet } from "@/domain/entities/wallet";
+
 import {
   CreateWalletRequestDto,
   CreateWalletResponseDto,
