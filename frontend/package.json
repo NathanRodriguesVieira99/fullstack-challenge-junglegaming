@@ -4,10 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "engines": {
-    "node": ">=20 <=25"
+    "node": ">=22"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently \"npm:dev:vite\" \"npm:orval:watch\"",
+    "dev:vite": "vite",
+    "dev:test": "vite --port 5174 --mode test",
+    "orval:gen": "orval",
+    "orval:watch": "orval --watch",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
@@ -26,6 +30,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.0.1",
+    "orval": "^8.6.2",
     "radix-ui": "^1.4.3",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
@@ -52,6 +57,7 @@
     "@vitejs/plugin-react": "^6.0.1",
     "@vitest/coverage-v8": "^4.1.1",
     "babel-plugin-react-compiler": "^1.0.0",
+    "concurrently": "^9.2.1",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",
