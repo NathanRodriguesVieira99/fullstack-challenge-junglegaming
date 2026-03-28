@@ -6,18 +6,18 @@ import {
   Param,
   Query,
   Req,
-UseGuards,
+  UseGuards,
 } from "@nestjs/common";
 
 import { MessagePattern, Payload } from "@nestjs/microservices";
-import { KAFKA_TOPICS } from "@/constants/kafka";
+import { KAFKA_TOPICS } from "../../../../constants/kafka";
 
 import { ApiOperation, ApiTags, ApiQuery, ApiResponse } from "@nestjs/swagger";
 
-import { BetsHistoryService } from "@/application/services/games/bets/bets-history.service";
+import { BetsHistoryService } from "../../../../application/services/games/bets/bets-history.service";
 import { Decimal } from "@prisma/client/runtime/client";
-import type { PaginationQuery } from "@/presentation/dtos/bet.dto";
-import { JwtGuard } from "@/infrastructure/auth/jwt/jwt.guard";
+import type { PaginationQuery } from "../../../dtos/bet.dto";
+import { JwtGuard } from "../../../../infrastructure/auth/jwt/jwt.guard";
 
 export interface DebitMessageContract {
   playerId: string;
@@ -83,8 +83,9 @@ export class betsHistoryController {
   })
   async getBetsHistory(
     @Query() queryParams: PaginationQuery,
-    @Param() playerId: string,
+    @Req() req: { user: { sub: string } },
   ) {
+    const playerId = req.user?.sub;
     return await this.service.execute(queryParams, playerId);
   }
 }
