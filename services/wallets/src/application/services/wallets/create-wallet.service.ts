@@ -1,20 +1,26 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { WalletsRepositoryContract } from "../../../domain/repositories/wallets/wallets.repository.contract";
 
-import type { CreateWalletRequestDto } from "../../../presentation/dtos/wallet.dto";
 import type { ClientKafka } from "@nestjs/microservices";
+import { KAFKA_CLIENTS } from "../../../constants/kafka";
+import { KAFKA_TOPICS } from "../../../constants/kafka";
+
+import { WalletsRepositoryContract } from "../../../domain/repositories/wallets/wallets.repository.contract";
+import { CreateWalletRequestDto } from "../../../presentation/dtos/wallet.dto";
 
 @Injectable()
 export class CreateWalletService {
   constructor(
     private readonly repo: WalletsRepositoryContract,
-    @Inject("wallets-producer") private readonly kafka: ClientKafka,
+    @Inject(KAFKA_CLIENTS.PRODUCER) private readonly kafka: ClientKafka,
   ) {}
 
   async execute({ playerId, balance }: CreateWalletRequestDto) {
     const wallet = await this.repo.createWallet({ playerId, balance });
 
-    this.kafka.emit("wallet.created", { playerId, walletId: wallet.id });
+    this.kafka.emit(KAFKA_TOPICS.WALLET_CREATED, {
+      playerId,
+      walletId: wallet.id,
+    });
 
     return wallet;
   }
