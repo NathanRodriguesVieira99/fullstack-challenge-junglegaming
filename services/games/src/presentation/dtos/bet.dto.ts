@@ -1,7 +1,7 @@
 import {
   BET_STATUS,
   ROUND_STATUS,
-} from "@/infrastructure/database/generated/enums";
+} from "../../infrastructure/database/generated/enums";
 import { Decimal } from "@prisma/client/runtime/client";
 
 export type PaginationQuery = {
