@@ -6,7 +6,4 @@ export const mockKafkaProducer = {
   close: vi.fn().mockResolvedValue(undefined),
 };
 
-export const kafkaMockProvider = {
-  provide: "wallets-producer",
-  useValue: mockKafkaProducer,
-};
+
