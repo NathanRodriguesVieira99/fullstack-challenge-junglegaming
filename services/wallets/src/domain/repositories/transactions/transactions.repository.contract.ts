@@ -1,34 +1,40 @@
 import {
-  TransactionResponseDto,
-  TransactionRequestDto,
-} from "@/presentation/dtos/transaction.dto";
+  DebitResponseDto,
+  DebitRequestDto,
+} from "@/presentation/dtos/debit.dto";
+import {
+  CreditRequestDto,
+  CreditResponseDto,
+} from "@/presentation/dtos/credit.dto";
+import type { Decimal } from "@prisma/client/runtime/client";
 
 export interface ITransactionRepository {
-  // creditTransaction(
-  //   playerId: string,
-  //   transactionId: string,
-  //   walletId: string,
-  //   amount: Decimal,
-  // ): Promise<TransactionDto>;
+  creditTransaction({
+    transactionValue,
+    playerId,
+    transactionId,
+    walletId,
+  }: CreditRequestDto): Promise<CreditResponseDto>;
+
   debitTransaction({
     transactionValue,
     playerId,
     transactionId,
     walletId,
-  }: TransactionRequestDto): Promise<TransactionResponseDto>;
+  }: DebitRequestDto): Promise<DebitResponseDto>;
 }
 
 export abstract class TransactionRepositoryContract implements ITransactionRepository {
-  // abstract creditTransaction(
-  //   playerId: string,
-  //   transactionId: string,
-  //   walletId: string,
-  //   amount: Decimal,
-  // ): Promise<TransactionDto>;
+  abstract creditTransaction({
+    transactionValue,
+    playerId,
+    transactionId,
+    walletId,
+  }: CreditRequestDto): Promise<CreditResponseDto>;
   abstract debitTransaction({
     transactionValue,
     playerId,
     transactionId,
     walletId,
-  }: TransactionRequestDto): Promise<TransactionResponseDto>;
+  }: DebitRequestDto): Promise<DebitResponseDto>;
 }
