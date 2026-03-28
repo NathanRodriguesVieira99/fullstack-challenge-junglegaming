@@ -8,7 +8,6 @@ export class HealthController {
   @Get("health")
   @ApiOperation({ summary: "Verifica a saúde do serviço", operationId: "healthCheck" })
   @ApiResponse({ type: HealthCheckResponseDto, status: 200 })
-  @Get("health")
   check(): HealthCheckResponseDto {
     return {
       status: "ok",
