@@ -62,6 +62,16 @@
         "description": "Cria uma nova carteira para o jogador autenticado com saldo inicial de 1000.00. Cada jogador pode ter apenas uma carteira.",
         "operationId": "createWallet",
         "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateWalletRequestDto"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": "Carteira criada com sucesso com saldo inicial",
@@ -152,6 +162,26 @@
           "playerId",
           "balance",
           "createdAt"
+        ]
+      },
+      "CreateWalletRequestDto": {
+        "type": "object",
+        "properties": {
+          "playerId": {
+            "type": "string",
+            "description": "ID único do jogador que possui a carteira",
+            "example": "123e4567-e89b-12d3-a456-426614174000",
+            "format": "uuid"
+          },
+          "balance": {
+            "type": "string",
+            "description": "Saldo inicial da carteira em formato decimal",
+            "example": "1000.00"
+          }
+        },
+        "required": [
+          "playerId",
+          "balance"
         ]
       }
     }
