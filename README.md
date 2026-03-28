@@ -58,7 +58,7 @@
 
 ## Setup & Execução
 
-Pré-requisitos: **Bun >= 1.x**, **NodeJs >= 20**, **Docker & Docker Compose**
+Pré-requisitos: **Bun >= 1.x**, **NodeJs >= 22**, **Docker & Docker Compose**
 
 ```bash
 git clone https://github.com/NathanRodriguesVieira99/fullstack-challenge-junglegaming
@@ -146,10 +146,11 @@ cd frontend && bun test:e2e:headed
 ## Decisões de Arquitetura & Trade-offs
 
 - **Mensageria**: Kafka escolhido pela robustez e integração pronta no NestJS.
-- **Precisão monetária**: Todos os valores em centavos (Decimal/BigInt) — nunca ponto flutuante.
+- **Precisão monetária**: Todos os valores em centavos (Decimal) — nunca ponto flutuante.
 - **DDD**: Separação clara de camadas e bounded contexts.
 - **Infra**: Tudo automatizado via Docker Compose, sem dependências manuais.
 - **Frontend**: Vite + React para maior controle e performance.
+- **Orval + TanStack Query**: Optou-se pelo Orval para gerar as queries e mutations do TanStack Query automaticamente a partir do Swagger de cada serviço. Isso garante que todas as requisições HTTP sejam tipadas corretamente, refletindo os schemas e DTOs definidos nos backends. Qualquer mudança na API é automaticamente refletida no frontend, eliminando erros de tipagem manual e mantendo a consistência entre frontend e backend.
 
 ---
 
