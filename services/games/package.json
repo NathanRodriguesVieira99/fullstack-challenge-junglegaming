@@ -2,20 +2,23 @@
   "name": "@crash/games",
   "version": "0.0.1",
   "private": true,
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "bun run --watch src/main.ts",
     "start": "bun run src/main.ts",
     "test:unit": "vitest run --bail 1",
     "test:watch:unit": " vitest watch --bail 1",
     "test:cov:unit": " vitest run --coverage",
-    "pretest:e2e": "prisma migrate deploy",
-    "test:e2e": " vitest run --config ./tests/e2e/vitest.config.e2e.ts",
-    "test:cov:e2e": " vitest run --config ./tests/e2e/vitest.config.e2e.ts --coverage",
-    "db:migrate": "prisma migrate dev",
+    "pretest:e2e": "NODE_ENV=test DATABASE_URL=\"postgresql://admin:admin@localhost:5432/games_test\" prisma migrate deploy",
+    "test:e2e": "NODE_ENV=test DATABASE_URL=\"postgresql://admin:admin@localhost:5432/games_test\" vitest run --config ./tests/e2e/vitest.config.e2e.ts",
+    "test:cov:e2e": "NODE_ENV=test DATABASE_URL=\"postgresql://admin:admin@localhost:5432/games_test\" vitest run --config ./tests/e2e/vitest.config.e2e.ts --coverage",
+    "db:migrate": " NODE_ENV=development DATABASE_URL=\"postgresql://admin:admin@localhost:5432/games\" prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
-    "db:generate": "prisma generate",
-    "db:studio": "prisma studio",
-    "db:seed": " prisma db seed"
+    "db:generate": " NODE_ENV=development DATABASE_URL=\"postgresql://admin:admin@localhost:5432/games\" prisma generate",
+    "db:studio": "NODE_ENV=development DATABASE_URL=\"postgresql://admin:admin@localhost:5432/games\" prisma studio",
+    "db:seed": " NODE_ENV=development DATABASE_URL=\"postgresql://admin:admin@localhost:5432/games\" prisma db seed"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.1",
