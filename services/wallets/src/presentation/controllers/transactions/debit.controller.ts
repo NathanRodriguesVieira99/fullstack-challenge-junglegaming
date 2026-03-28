@@ -9,7 +9,6 @@ import { DebitRequestDto, DebitResponseDto } from "../../dtos/debit.dto";
 import { KAFKA_TOPICS } from "@/constants/kafka";
 
 @ApiTags("debit")
-@UseGuards(JwtGuard)
 @Controller("debit")
 export class DebitController {
   constructor(private readonly service: DebitService) {}
@@ -21,6 +20,7 @@ export class DebitController {
     return this.service.execute(payload);
   }
 
+  @UseGuards(JwtGuard)
   @Post()
   @ApiBody({ type: DebitRequestDto })
   debit(@Body() body: DebitRequestDto) {
