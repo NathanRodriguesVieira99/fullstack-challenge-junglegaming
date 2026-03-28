@@ -7,6 +7,8 @@ import { CreateWalletService } from "../../../../../src/application/services/wal
 
 import { WalletsRepositoryContract } from "../../../../../src/domain/repositories/wallets/wallets.repository.contract";
 
+import { KAFKA_CLIENTS } from "../../../../../src/constants/kafka";
+
 // vi.hoisted => usado para isolar os mocks
 const { mockWalletRepository, mockKafkaProducer } = vi.hoisted(() => ({
   mockWalletRepository: {
@@ -40,7 +42,7 @@ describe("CreateWalletService", () => {
           useValue: mockWalletRepository,
         },
         {
-          provide: "wallets-producer",
+          provide: KAFKA_CLIENTS.PRODUCER,
           useValue: mockKafkaProducer,
         },
       ],
