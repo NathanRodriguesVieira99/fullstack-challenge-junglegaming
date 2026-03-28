@@ -1,30 +1,32 @@
 @base_url=http://localhost:4001
-# @keycloak_base_url=http://localhost:8080/realms/crash-game/protocol/openid-connect
-# @access_token={{keycloak_tokens.response.body.access_token}}
-# @refresh_token={{keycloak_tokens.response.body.refresh_token}}
 
-###
+
 
 # @name Healthcheck
 GET {{base_url}}/health
 
 ###
 
-# @name keycloak_tokens
-# POST {{keycloak_base_url}}/token
-# Content-Type: application/x-www-form-urlencoded
-
-# client_id=crash-game-client
-# &grant_type=password
-# &username=player
-# &password=player123
-# &scope=openid
 
 ###
 
-# @name keycloak_userinfo
-# GET {{keycloak_base_url}}/userinfo
-# Authorization: Bearer {{access_token}}
+# @name bets_history
+GET {{base_url}}/games/bets/me?page=1&limit=10
+Authorization: Bearer 
+Content-Type:  application/json
 
-###
+### 
+ 
+ # @name create_bet
+POST {{base_url}}/games/bet
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ6VWRxTnFsUEhGSEJBN3ZDdkI4VThVNk1PdHhjTGxHeHBoT1I3QllxUmswIn0.eyJleHAiOjE3NzQ3MzU5OTAsImlhdCI6MTc3NDczMjM5MCwianRpIjoib25ydHJvOmQzOTdhMTBiLWNlNjYtMGFhMS1jM2FlLTI0YTkzMzFjNmZiYSIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6ODA4MC9yZWFsbXMvY3Jhc2gtZ2FtZSIsInN1YiI6IjcwYmUyNjM0LWY5ZGMtNDU5Mi1iMjU4LTljY2M0ODJmZTdlMyIsInR5cCI6IkJlYXJlciIsImF6cCI6ImNyYXNoLWdhbWUtY2xpZW50Iiwic2lkIjoiUWFhT0tzM0JfNFkzR294WG9UWVQxMXVDIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjMwMDAiLCJodHRwOi8vbG9jYWxob3N0OjUxNzMiXSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiVGVzdCBQbGF5ZXIiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJwbGF5ZXIiLCJnaXZlbl9uYW1lIjoiVGVzdCIsImZhbWlseV9uYW1lIjoiUGxheWVyIiwiZW1haWwiOiJwbGF5ZXJAY3Jhc2gtZ2FtZS5kZXYifQ.G8Nj0phA3ESvxV6Zd1vyIfMCSKcbT7lQNP7Nx3Ep6C-t_LfhIvCtL3yB6krauEFKQcE8LN8e7ip5_3MHc0ynXI1OE0HBzrBVJRRLu2zJf48-CQ-J3UPmO0AlZolYzgJG5ERvq4Iz9FJ1Xt6eqBDFv2PpPYuabMEmtxxjbUeHt1EoiguxztinzalH44rzBiMiVnxz--4ZSdJyBStq4RvwbCH4asu7ro4Qc0Do00EMJCDA_iqJm1eW0gkZu6ae_4xv6nOWFYQnnryWkSObph9ZE8dZWedCHtX4NaZMFRzlu4PU4xFarC1_UkCsbFIXGRdK9RjrxpJN9aedkTaLWp60rA
+Content-Type: application/json
 
+{
+	"betId": "bet-1",
+	"playerId": "70be2634-f9dc-4592-b258-9ccc482fe7e3",
+	"amount": 100,
+	"betStatus": "WIN",
+	"roundStatus": "FINALIZED",
+	"roundId": "round-1"
+}
