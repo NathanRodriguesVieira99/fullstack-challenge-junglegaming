@@ -15,8 +15,8 @@ import { RoundsService } from "@services/games/rounds/rounds.service";
 /* Controllers */
 import { HealthController } from "@controllers/health/health.controller";
 import { CreateBetController } from "@/presentation/controllers/games/bet/create-bet.controller";
-import { betsHistoryController } from "@/presentation/controllers/games/bets/bets-history.controller";
-import { roundsController } from "@controllers/games/rounds/rounds.controller";
+import { BetsHistoryController } from "@/presentation/controllers/games/bets/bets-history.controller";
+import { RoundsController } from "@controllers/games/rounds/rounds.controller";
 
 /* Repositories */
 import { BetsRepositoryContract } from "@/domain/repositories/bets/bets.repository.contract";
@@ -49,8 +49,8 @@ import { BetsRepositoryImplementation } from "@/domain/repositories/bets/bets.re
   controllers: [
     HealthController,
     CreateBetController,
-    betsHistoryController,
-    roundsController,
+    BetsHistoryController,
+    RoundsController,
   ],
 })
 export class httpModule {}
