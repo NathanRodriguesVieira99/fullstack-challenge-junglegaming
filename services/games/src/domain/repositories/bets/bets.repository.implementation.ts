@@ -75,23 +75,32 @@ export class BetsRepositoryImplementation implements BetsRepositoryContract {
     playerId,
   }: CreateBetRequestDto): Promise<CreateBetResponseDto> {
     const createBetTransaction = await this.db.$transaction(async () => {
-      const playerExists = await this.db.bet.findFirst({
-        where: { playerId },
-      });
+      // !! FIX
+      // const playerExists = await this.db.bet.findFirst({
+      //   where: { playerId },
+      // });
 
-      if (!playerExists) throw new NotFoundException("Player Not Found");
+      // if (!playerExists) throw new NotFoundException("Player Not Found");
 
-      const roundExists = await this.db.round.findFirst({
-        where: { id: roundId },
-      });
+      // const roundExists = await this.db.round.findUnique({
+      //   where: { id: roundId },
+      // });
 
-      if (!roundExists) throw new NotFoundException("Round Not Found");
+      // if (!roundExists) throw new NotFoundException("Round Not Found");
 
-      const isRoundAvailable = await this.db.round.findFirst({
-        where: {
-          roundStatus: "FINALIZED",
-        },
-      });
+      // const isRoundAvailable = await this.db.round.findFirst({
+      //   where: {
+      //     roundStatus: "FINALIZED",
+      //   },
+      // });
+
+       
+      // if (!isRoundAvailable)
+      //   throw new BadRequestException("Round already finished");
+
+      // if (roundStatus === "CRASHED") {
+      //   throw new BadRequestException("Bet crashed out!");
+      // }
 
       const betValue = Decimal(new Decimal(amount));
 
@@ -100,13 +109,6 @@ export class BetsRepositoryImplementation implements BetsRepositoryContract {
 
       if (betValue.gt(1000))
         throw new UnauthorizedException("The max debit value is 1000.00");
-
-      if (!isRoundAvailable)
-        throw new BadRequestException("Round already finished");
-
-      if (roundStatus === "CRASHED") {
-        throw new BadRequestException("Bet crashed out!");
-      }
 
       const bet = await this.db.bet.create({
         data: {
