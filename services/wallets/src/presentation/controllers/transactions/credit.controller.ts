@@ -9,14 +9,14 @@ import {
   CreditRequestDto,
   CreditResponseDto,
 } from "@/presentation/dtos/credit.dto";
+import { KAFKA_TOPICS } from "@/constants/kafka";
 
 @ApiTags("credit")
-@UseGuards(JwtGuard)
 @Controller("credit")
 export class CreditController {
   constructor(private readonly service: CreditService) {}
 
-  @MessagePattern("credit.transaction")
+  @MessagePattern(KAFKA_TOPICS.CREDIT_TRANSACTION)
   @ApiBody({ type: CreditRequestDto })
   creditMessage(
     @Payload() payload: CreditRequestDto,
@@ -25,6 +25,7 @@ export class CreditController {
   }
 
   @Post()
+  @UseGuards(JwtGuard)
   @ApiBody({ type: CreditRequestDto })
   credit(@Body() body: CreditRequestDto) {
     return this.service.execute(body);
