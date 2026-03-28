@@ -1,0 +1,17 @@
+export const KAFKA_CLIENTS = {
+  PRODUCER: "GAMES_KAFKA_PRODUCER",
+  CONSUMER: "GAMES_KAFKA_CONSUMER",
+};
+
+export const KAFKA_GROUPS = {
+  KAFKA_CONSUMER_GROUP: "GAMES_GROUP",
+};
+
+export const KAFKA_CLIENTS_IDS = {
+  KAFKA_PRODUCER_CLIENT_ID: "GAMES_SERVICE_PRODUCER",
+  KAFKA_CONSUMER_CLIENT_ID: "GAMES_SERVICE_CONSUMER",
+} as const;
+
+export const KAFKA_BROKER = "kafka:29092"; // fora do Docker => localhost:9092
+
+export const KAFKA_TOPICS = {} as const;
