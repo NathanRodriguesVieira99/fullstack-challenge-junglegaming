@@ -13,7 +13,7 @@ import { Decimal } from "@prisma/client/runtime/client";
 import { UnauthorizedException } from "@nestjs/common";
 
 import { mockKafkaProducer } from "../../../../__mocks__/kafka.mock";
-import { KAFKA_TOPICS } from "../../../../../src/constants/kafka";
+import { KAFKA_TOPICS, KAFKA_CLIENTS } from "../../../../../src/constants/kafka";
 
 const { mockTransactionRepository } = vi.hoisted(() => ({
   mockTransactionRepository: {
@@ -50,7 +50,7 @@ describe("DebitService", () => {
           useValue: mockTransactionRepository,
         },
         {
-          provide: "wallets-producer",
+          provide: KAFKA_CLIENTS.PRODUCER,
           useValue: mockKafkaProducer,
         },
       ],
