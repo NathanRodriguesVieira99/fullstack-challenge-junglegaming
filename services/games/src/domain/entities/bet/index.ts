@@ -1,25 +1,22 @@
-import { Round } from "../round";
-
-type BET_STATUS = "PENDING" | "WON" | "LOST" | "CASHED_OUT";
+import type { BET_STATUS } from "@/infrastructure/database/generated/enums";
+import type { Decimal } from "@prisma/client/runtime/client";
 
 interface BetProps {
   id: string;
-  status: BET_STATUS;
+  betStatus: BET_STATUS;
   playerId: string;
-  amount: bigint;
+  amount: Decimal;
   cashedOutAt: Date;
   createdAt: Date;
   roundId: string;
-  round: Round;
 }
 
 export class Bet implements BetProps {
   id: string;
-  status: BET_STATUS;
+  betStatus: BET_STATUS;
   playerId: string;
-  amount: bigint;
+  amount: Decimal;
   cashedOutAt: Date;
   createdAt: Date;
   roundId: string;
-  round: Round;
 }
