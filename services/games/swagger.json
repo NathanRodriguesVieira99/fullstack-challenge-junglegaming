@@ -25,21 +25,31 @@
     },
     "/games/bet": {
       "post": {
-        "operationId": "betController_bet",
+        "operationId": "CreateBetController_bet",
         "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBetRequestDto"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": ""
           }
         },
         "tags": [
-          "Apostas"
+          "Bet"
         ]
       }
     },
     "/games/bet/cashout": {
       "post": {
-        "operationId": "betController_cashout",
+        "operationId": "CreateBetController_cashout",
         "parameters": [],
         "responses": {
           "201": {
@@ -47,21 +57,66 @@
           }
         },
         "tags": [
-          "Apostas"
+          "Bet"
         ]
       }
     },
     "/games/bets/me": {
       "get": {
-        "operationId": "betsController_bets",
-        "parameters": [],
+        "operationId": "betsHistory",
+        "parameters": [
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Limite de dados por página",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Página atual",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Dados paginados das apostas do jogador",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "meta": {
+                      "page": 1,
+                      "limit": 10,
+                      "total_items": 100,
+                      "total_pages": 10
+                    },
+                    "data": [
+                      {
+                        "id": "bet-id",
+                        "betStatus": "WIN",
+                        "amount": "100.00",
+                        "cashedOutAt": "2024-01-01T00:00:00.000Z",
+                        "createdAt": "2024-01-01T00:00:00.000Z"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
           }
         },
+        "summary": "Busca o histórico das apostas pertencentes ao jogador",
         "tags": [
-          "Minhas Apostas"
+          "Bets"
         ]
       }
     },
@@ -75,7 +130,7 @@
           }
         },
         "tags": [
-          "Rodadas"
+          "Rounds"
         ]
       }
     },
@@ -89,7 +144,7 @@
           }
         },
         "tags": [
-          "Rodadas"
+          "Rounds"
         ]
       }
     },
@@ -103,7 +158,7 @@
           }
         },
         "tags": [
-          "Rodadas"
+          "Rounds"
         ]
       }
     }
@@ -135,6 +190,53 @@
         "required": [
           "status",
           "service"
+        ]
+      },
+      "Decimal2": {
+        "type": "object",
+        "properties": {}
+      },
+      "CreateBetRequestDto": {
+        "type": "object",
+        "properties": {
+          "betId": {
+            "type": "string"
+          },
+          "playerId": {
+            "type": "string"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/Decimal2"
+          },
+          "betStatus": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "WON",
+              "LOST",
+              "CASHED_OUT"
+            ]
+          },
+          "roundStatus": {
+            "type": "string",
+            "enum": [
+              "WAITING",
+              "RUNNING",
+              "CRASHED",
+              "FINALIZED"
+            ]
+          },
+          "roundId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "betId",
+          "playerId",
+          "amount",
+          "betStatus",
+          "roundStatus",
+          "roundId"
         ]
       }
     }

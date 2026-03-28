@@ -100,6 +100,54 @@
           "Wallets"
         ]
       }
+    },
+    "/credit": {
+      "post": {
+        "operationId": "CreditController_credit",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreditRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "credit"
+        ]
+      }
+    },
+    "/debit": {
+      "post": {
+        "operationId": "DebitController_debit",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DebitRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "debit"
+        ]
+      }
     }
   },
   "info": {
@@ -182,6 +230,72 @@
         "required": [
           "playerId",
           "balance"
+        ]
+      },
+      "CreditRequestDto": {
+        "type": "object",
+        "properties": {
+          "playerId": {
+            "type": "string",
+            "description": "ID único do jogador",
+            "example": "123e4567-e89b-12d3-a456-426614174000",
+            "format": "uuid"
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "ID único da transação (chave de idempotência)",
+            "example": "txn-123e4567-e89b-12d3-a456-426614174002"
+          },
+          "walletId": {
+            "type": "string",
+            "description": "ID da carteira do jogador",
+            "example": "123e4567-e89b-12d3-a456-426614174001",
+            "format": "uuid"
+          },
+          "transactionValue": {
+            "type": "string",
+            "description": "Valor do crédito",
+            "example": "50.00"
+          }
+        },
+        "required": [
+          "playerId",
+          "transactionId",
+          "walletId",
+          "transactionValue"
+        ]
+      },
+      "DebitRequestDto": {
+        "type": "object",
+        "properties": {
+          "playerId": {
+            "type": "string",
+            "description": "ID único do jogador",
+            "example": "123e4567-e89b-12d3-a456-426614174000",
+            "format": "uuid"
+          },
+          "transactionId": {
+            "type": "string",
+            "description": "ID único da transação (chave de idempotência)",
+            "example": "txn-123e4567-e89b-12d3-a456-426614174002"
+          },
+          "walletId": {
+            "type": "string",
+            "description": "ID da carteira do jogador",
+            "example": "123e4567-e89b-12d3-a456-426614174001",
+            "format": "uuid"
+          },
+          "transactionValue": {
+            "type": "string",
+            "description": "Valor do débito (aposta)",
+            "example": "50.00"
+          }
+        },
+        "required": [
+          "playerId",
+          "transactionId",
+          "walletId",
+          "transactionValue"
         ]
       }
     }
