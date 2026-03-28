@@ -33,7 +33,7 @@ describe("[E2E] GetWallet Controller ", () => {
   });
 
   beforeEach(async () => {
-    await db.wallet.deleteMany();
+    // await db.wallet.deleteMany();
 
     await request(app.getHttpServer())
       .post("/wallets")

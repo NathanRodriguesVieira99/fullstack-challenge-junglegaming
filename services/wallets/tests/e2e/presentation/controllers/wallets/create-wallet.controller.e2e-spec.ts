@@ -32,7 +32,7 @@ describe("CreateWalletController E2E", () => {
   });
 
   beforeEach(async () => {
-    await db.wallet.deleteMany();
+    // await db.wallet.deleteMany();
   });
 
   afterAll(async () => {
